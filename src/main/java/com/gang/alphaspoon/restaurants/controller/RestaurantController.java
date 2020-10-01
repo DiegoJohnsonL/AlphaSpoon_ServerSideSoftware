@@ -43,14 +43,12 @@ public class RestaurantController {
     public RestaurantResource getRestaurantByEmail(@PathVariable(name = "restaurantEmail") String restaurant){
         return convertToResource(restaurantService.getRestaurantByEmail(restaurant));
     }
-
     @PostMapping
     public RestaurantResource createRestaurant(
             @Valid @RequestBody SaveRestaurantResource restaurantResource){
         return convertToResource(restaurantService
                 .create(convertToEntity(restaurantResource)));
     }
-
     @PutMapping("/{restaurantId}")
     public  RestaurantResource updateRestaurant(
             @PathVariable(name = "restaurantId") Long restaurantId,
@@ -63,8 +61,6 @@ public class RestaurantController {
             @PathVariable(name = "restaurantId") Long restaurantId){
         return restaurantService.deleteRestaurant(restaurantId);
     }
-
     private Restaurant convertToEntity(@Valid SaveRestaurantResource resource){return mapper.map(resource,Restaurant.class);}
     private RestaurantResource convertToResource(Restaurant entity){return mapper.map(entity, RestaurantResource.class);}
-
 }

@@ -1,12 +1,14 @@
 package com.gang.alphaspoon.restaurants.domain.model;
 
+import com.gang.alphaspoon.model.AuditModel;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "restaurants")
-public class Restaurant{
+public class Restaurant extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
@@ -16,11 +18,6 @@ public class Restaurant{
     private String email;
     @NotNull
     private int phoneNumber;
-
-
-
-
-
     public Restaurant(Long id, @NotNull String name, @Email String email, @NotNull int phoneNumber) {
         Id = id;
         this.name = name;
@@ -30,7 +27,6 @@ public class Restaurant{
 
     public Restaurant() {
     }
-
 
     public Long getId() {
         return Id;
