@@ -40,6 +40,5 @@ public class CustomerRepositoryTest {
         List<Customer> result = customerRepository.findAllCustomers();
         assertThat(result, is(notNullValue()));
     }
-
 }
 */

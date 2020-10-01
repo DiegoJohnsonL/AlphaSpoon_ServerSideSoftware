@@ -30,14 +30,13 @@ public class AdministratorController {
 
         return new PageImpl<>(resources, pageable, resources.size());
     }
-
     @GetMapping("/{adminId}")
     public AdministratorResource getAdministratorById(@PathVariable(name = "adminId") Long adminId){
         return convertToResource(administratorService.getAdministratorById(adminId));
     }
 
     @GetMapping("/{adminEmail:.+}")
-    public AdministratorResource getAdministratorById(@PathVariable(name = "adminEmail") String adminEmail){
+    public AdministratorResource getAdministratorByEmail(@PathVariable(name = "adminEmail") String adminEmail){
         return convertToResource(administratorService.getAdministratorByEmail(adminEmail));
     }
     @GetMapping("/{dni}")
