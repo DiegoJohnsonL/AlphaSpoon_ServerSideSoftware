@@ -22,7 +22,7 @@ public class Product extends AuditModel {
     @NotNull
     private Double price;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)  // Un post puede tener varios comentarios - muchos a uno - Al crear no quiero un comment sin un post(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "restaurant_id", nullable = false) // cual va a ser la columna que hara de foreing key en la tabla de comment
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore // en caso se creo un archivo JSON, no agregar la columna post
@@ -92,6 +92,15 @@ public class Product extends AuditModel {
 
     public Product setTags(List<Tag> tags) {
         this.tags = tags;
+        return this;
+    }
+
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    public Product setRestaurant(Restaurant restaurant) {
+        this.restaurant = restaurant;
         return this;
     }
 }

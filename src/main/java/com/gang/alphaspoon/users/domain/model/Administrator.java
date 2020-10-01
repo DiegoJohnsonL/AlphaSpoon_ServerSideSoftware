@@ -30,7 +30,7 @@ public class Administrator extends AuditModel {
     @Email
     private String email;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)  // Un post puede tener varios comentarios - muchos a uno - Al crear no quiero un comment sin un post(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "restaurant_id", nullable = false) // cual va a ser la columna que hara de foreing key en la tabla de comment
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore // en caso se creo un archivo JSON, no agregar la columna post
