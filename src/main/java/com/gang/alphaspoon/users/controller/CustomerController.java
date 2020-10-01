@@ -1,5 +1,4 @@
 package com.gang.alphaspoon.users.controller;
-
 import com.gang.alphaspoon.users.domain.model.Customer;
 import com.gang.alphaspoon.users.domain.service.CustomerService;
 import com.gang.alphaspoon.users.dto.resource.CustomerResource;
@@ -57,22 +56,6 @@ public class CustomerController {
     public ResponseEntity<?> deleteCustomer(@PathVariable(name = "customerId") Long customerId){
         return customerService.deleteCustomer(customerId);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     private Customer convertToEntity(SaveCustomerResource resource){return mapper.map(resource,Customer.class);}
     private CustomerResource convertToResource(Customer entity){return mapper.map(entity, CustomerResource.class);}
