@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
-
     @Autowired
     private  RestaurantRepository restaurantRepository;
 
@@ -24,19 +23,13 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public Restaurant getRestaurantById(Long restaurantId) {
         return restaurantRepository.findById(restaurantId)
-                .orElseThrow(()->new ResourceNotFoundException(
-                        "Restaurant with"+ restaurantId + "not found"
-                ));
+                .orElseThrow(()->new ResourceNotFoundException("Restaurant with"+ restaurantId + "not found"  ));
     }
-
     @Override
     public Restaurant getRestaurantByEmail(String email) {
         return restaurantRepository.findByEmail(email)
-                .orElseThrow(()->new ResourceNotFoundException(
-                        "Restaurant with" + email + "not found"
-                ));
+                .orElseThrow(()->new ResourceNotFoundException("Restaurant with" + email + "not found" ));
     }
-
     @Override
     public Restaurant create(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
@@ -51,7 +44,6 @@ public class RestaurantServiceImpl implements RestaurantService {
             return restaurantRepository.save(restaurant);
         }).orElseThrow(()->new ResourceNotFoundException("Restaurant with" + restaurantId + "not found"));
     }
-
     @Override
     public ResponseEntity<?> deleteRestaurant(Long restaurantId) {
         return restaurantRepository.findById(restaurantId).map(restaurant -> {

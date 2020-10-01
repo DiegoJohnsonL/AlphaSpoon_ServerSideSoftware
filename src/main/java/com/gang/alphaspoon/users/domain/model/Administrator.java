@@ -1,6 +1,8 @@
 package com.gang.alphaspoon.users.domain.model;
 
 
+import com.gang.alphaspoon.model.AuditModel;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
@@ -8,7 +10,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "administrators")
-public class Administrator {
+public class Administrator extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
