@@ -8,9 +8,9 @@ import javax.validation.constraints.NotNull;
 public class SaveProductResource {
 
     @NotNull(message = "Missing Product name")
-    @Length(min = 3, message = "Name needs to have between 3 to 50 characters")
+    @Length(min = 3, max = 100, message = "Name needs to have between 3 to 50 characters")
     private String name;
-    @NotNull
+    @NotNull(message = "El precio es requerido")
     private Double price;
 
     public String getName() {

@@ -37,7 +37,7 @@ public class CustomerController {
         return convertToResource(customerService.getCustomerById(customerId));
     }
     @GetMapping("/{customerEmail:.+}")
-    public CustomerResource getCustomerById(@PathVariable(name = "customerEmail") String customerEmail){
+    public CustomerResource getCustomerByEmail(@PathVariable(name = "customerEmail") String customerEmail){
         return convertToResource(customerService.getCustomerByEmail(customerEmail));
     }
 
