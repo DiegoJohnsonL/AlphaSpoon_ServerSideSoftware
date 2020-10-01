@@ -6,10 +6,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 public interface ProductService {
-    public Page<Product> getAllProducts(Pageable pageable);
-    public Product getProductById(Long productId);
-    public Product createProduct(Product product);
-    public Product updateProduct(Long productId, Product product);
-    public ResponseEntity<?> deleteProduct(Long productId);
-
+    Page<Product> getAllProducts(Pageable pageable);
+    Product getProductById(Long productId);
+    Product createProduct(Product product);
+    Product updateProduct(Long productId, Product product);
+    ResponseEntity<?> deleteProduct(Long productId);
+    Product assignProductTag(Long productId, Long tagId);
+    Product unassignProductTag(Long productId, Long tagId);
+    Page<Product> getAllProductsByTagId(Long tagId, Pageable pageable);
 }

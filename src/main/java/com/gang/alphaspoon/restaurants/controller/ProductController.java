@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping
 public class ProductController {
 
     @Autowired
@@ -27,30 +27,48 @@ public class ProductController {
     @Autowired
     private ModelMapper mapper;
 
-    @GetMapping
+    @GetMapping("/products")
     public Page<ProductResource> getAllProducts(Pageable pageable){
         List<ProductResource> resources = productService.getAllProducts(pageable).getContent()
                 .stream().map(this::convertToResource).collect(Collectors.toList());
         return new PageImpl<>(resources,pageable, resources.size());
     }
-    @GetMapping("/{productId}")
+    @GetMapping("/products/{productId}")
     public ProductResource getProductById(@PathVariable(name = "productId") Long productId){
         return convertToResource(productService.getProductById(productId));
     }
 
-    @PostMapping
+    @PostMapping("/products")
     public ProductResource createProduct(@Valid @RequestBody SaveProductResource productResource){
         return convertToResource(productService.createProduct(convertToEntity(productResource)));
     }
 
-    @PutMapping("/{productId}")
+    @PutMapping("/products/{productId}")
     public ProductResource updateProduct(@PathVariable(name = "productId")Long productId, SaveProductResource productResource){
         return convertToResource(productService.updateProduct(productId, convertToEntity(productResource)));
     }
-    @DeleteMapping("/{productId}")
+    @DeleteMapping("/products/{productId}")
     public ResponseEntity<?> deleteProduct(@PathVariable(name = "productId") Long productId){
         return productService.deleteProduct(productId);
     }
+    @GetMapping("/tags/{tagId}/products")
+    public Page<ProductResource> getAllProductsByTagId(@PathVariable(name = "tagId") Long tagId, Pageable pageable){
+        Page<Product> productPage = productService.getAllProductsByTagId(tagId, pageable);
+        List<ProductResource> resources = productPage.getContent().stream()
+                .map(this::convertToResource).collect(Collectors.toList());
+        return new PageImpl<>(resources, pageable, resources.size());
+    }
+    @PostMapping("products/{productId}/tags/{tagId}")
+    public ProductResource assignProductTag(@PathVariable(name = "productId") Long productId,
+                                            @PathVariable(name = "tagId") Long tagId){
+        return  convertToResource(productService.assignProductTag(productId, tagId));
+    }
+    @DeleteMapping("/products/{productId}/tags/{tagId}")
+    public ProductResource unassignPostTag(@PathVariable(name = "productId") Long productId,
+                                        @PathVariable(name = "tagId") Long tagId){
+        return  convertToResource(productService.assignProductTag(productId, tagId));
+    }
+
 
     private Product convertToEntity(@Valid SaveProductResource resource){return mapper.map(resource,Product.class);}
     private ProductResource convertToResource(Product entity){return mapper.map(entity, ProductResource.class);}

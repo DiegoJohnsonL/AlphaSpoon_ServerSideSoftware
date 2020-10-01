@@ -1,12 +1,9 @@
 package com.gang.alphaspoon.users.service;
 
-import com.gang.alphaspoon.exception.ResourceNotFoundException;
+import com.gang.alphaspoon.exceptions.ResourceNotFoundException;
 import com.gang.alphaspoon.users.domain.model.Administrator;
-import com.gang.alphaspoon.users.domain.model.Customer;
 import com.gang.alphaspoon.users.domain.repository.AdministratorRepository;
-import com.gang.alphaspoon.users.domain.repository.CustomerRepository;
 import com.gang.alphaspoon.users.domain.service.AdministratorService;
-import com.gang.alphaspoon.users.domain.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,6 +1,6 @@
 package com.gang.alphaspoon.restaurants.service;
 
-import com.gang.alphaspoon.exception.ResourceNotFoundException;
+import com.gang.alphaspoon.exceptions.ResourceNotFoundException;
 import com.gang.alphaspoon.restaurants.domain.model.Restaurant;
 import com.gang.alphaspoon.restaurants.domain.repository.RestaurantRepository;
 import com.gang.alphaspoon.restaurants.domain.service.RestaurantService;
