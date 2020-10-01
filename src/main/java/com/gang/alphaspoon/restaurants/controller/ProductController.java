@@ -58,7 +58,7 @@ public class ProductController {
                 .map(this::convertToResource).collect(Collectors.toList());
         return new PageImpl<>(resources, pageable, resources.size());
     }
-    @PostMapping("products/{productId}/tags/{tagId}")
+    @PostMapping("/products/{productId}/tags/{tagId}")
     public ProductResource assignProductTag(@PathVariable(name = "productId") Long productId,
                                             @PathVariable(name = "tagId") Long tagId){
         return  convertToResource(productService.assignProductTag(productId, tagId));
