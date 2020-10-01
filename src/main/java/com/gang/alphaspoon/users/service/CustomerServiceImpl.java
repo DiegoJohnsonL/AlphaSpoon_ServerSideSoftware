@@ -1,6 +1,6 @@
 package com.gang.alphaspoon.users.service;
 
-import com.gang.alphaspoon.exception.ResourceNotFoundException;
+import com.gang.alphaspoon.exceptions.ResourceNotFoundException;
 import com.gang.alphaspoon.users.domain.model.Customer;
 import com.gang.alphaspoon.users.domain.repository.CustomerRepository;
 import com.gang.alphaspoon.users.domain.service.CustomerService;

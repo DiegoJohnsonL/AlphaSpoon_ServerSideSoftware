@@ -1,9 +1,11 @@
 package com.gang.alphaspoon.restaurants.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gang.alphaspoon.model.AuditModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
@@ -17,6 +19,28 @@ public class Product extends AuditModel {
 
     @NotNull
     private Double price;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable(name = "product_tags", joinColumns = {@JoinColumn(name = "product_id")}, inverseJoinColumns = {@JoinColumn(name="tag_id")})
+    @JsonIgnore
+    private List<Tag> tags;
+
+    public boolean isTaggedWith(Tag tag){       // Business methods
+        return (this.getTags().contains(tag));
+    }
+
+    public Product tagWith(Tag tag) {
+        if(!this.isTaggedWith(tag)) {
+            this.getTags().add(tag);
+        }
+        return this;
+    }
+    public Product unTagWith(Tag tag) {
+        if(this.isTaggedWith(tag)) {
+            this.getTags().remove(tag);
+        }
+        return this;
+    }
 
     public Product(Long id, String name, Double price) {
         this.id = id;
@@ -51,6 +75,15 @@ public class Product extends AuditModel {
 
     public Product setPrice(Double price) {
         this.price = price;
+        return this;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public Product setTags(List<Tag> tags) {
+        this.tags = tags;
         return this;
     }
 }
