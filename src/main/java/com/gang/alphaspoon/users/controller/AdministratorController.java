@@ -16,14 +16,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/administrators")
 public class AdministratorController {
     @Autowired
     private ModelMapper mapper;
     @Autowired
     private AdministratorService administratorService;
 
-    @GetMapping("/administrators")
+    @GetMapping
     public Page<AdministratorResource> getAllAdministrators(Pageable pageable){
         List<AdministratorResource> resources = administratorService.getAllAdministrators(pageable).getContent()
                 .stream().map(this::convertToResource).collect(Collectors.toList());
@@ -31,31 +31,31 @@ public class AdministratorController {
         return new PageImpl<>(resources, pageable, resources.size());
     }
 
-    @GetMapping("/administrators/{adminId}")
+    @GetMapping("/{adminId}")
     public AdministratorResource getAdministratorById(@PathVariable(name = "adminId") Long adminId){
         return convertToResource(administratorService.getAdministratorById(adminId));
     }
 
-    @GetMapping("/administrators/{adminEmail:.+}")
+    @GetMapping("/{adminEmail:.+}")
     public AdministratorResource getAdministratorById(@PathVariable(name = "adminEmail") String adminEmail){
         return convertToResource(administratorService.getAdministratorByEmail(adminEmail));
     }
-    @GetMapping("/administrators/{dni}")
+    @GetMapping("/{dni}")
     public AdministratorResource getAdministratorByDni(@PathVariable(name = "dni")int dni){
         return convertToResource(administratorService.getAdministratorByDni(dni)); }
 
-    @PostMapping("/administrators")
+    @PostMapping
     public AdministratorResource createAdministrator(@Valid @RequestBody SaveAdministratorResource administratorResource){
         return convertToResource(administratorService.create(convertToEntity(administratorResource)));
     }
 
-    @PutMapping("/administrators/{adminId}")
+    @PutMapping("/{adminId}")
     public AdministratorResource updateAdministrator(@PathVariable(name = "adminId") Long adminId,
                                            SaveAdministratorResource administratorResource){
         return convertToResource(administratorService.updateAdministrator(adminId, convertToEntity(administratorResource)));
     }
 
-    @DeleteMapping("/administrators/{adminId}")
+    @DeleteMapping("/adminId}")
     public ResponseEntity<?> deleteAdministrator(@PathVariable(name = "adminId") Long adminId){
         return administratorService.deleteAdministrator(adminId);
     }

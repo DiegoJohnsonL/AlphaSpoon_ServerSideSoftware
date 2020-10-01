@@ -28,8 +28,9 @@ public class AdministratorServiceImpl implements AdministratorService
 
     @Override
     public Administrator getAdministratorById(Long administratorId) {
-        return administratorRepository.findById(administratorId).orElseThrow(()->new ResourceNotFoundException("User with"+
-                administratorId + "not found"));
+        return administratorRepository.findById(administratorId)
+                .orElseThrow(()->new ResourceNotFoundException(
+                        "User with"+administratorId + "not found"));
     }
 
     @Override
