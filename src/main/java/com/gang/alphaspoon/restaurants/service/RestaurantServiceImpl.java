@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
@@ -31,6 +32,7 @@ public class RestaurantServiceImpl implements RestaurantService {
                 .orElseThrow(()->new ResourceNotFoundException("Restaurant with" + email + "not found" ));
     }
     @Override
+    @Transactional
     public Restaurant create(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
     }
