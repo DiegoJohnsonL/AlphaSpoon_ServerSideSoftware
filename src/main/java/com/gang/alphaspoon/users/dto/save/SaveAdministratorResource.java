@@ -1,24 +1,25 @@
 package com.gang.alphaspoon.users.dto.save;
 
 import org.hibernate.validator.constraints.Length;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
 
-public class SaveCustomerResource {
-
+public class SaveAdministratorResource {
     @NotNull(message = "Missing customer name")
     @Length(min = 3, message = "Name needs to have between 3 to 50 characters")
     private String name;
+
     @NotNull(message = "Missing password")
     @Length(min = 6, max = 16, message = "Password needs to have between 3 to 50 characters")
     private String password;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date birthday;
+
+    @NotNull(message = "Missing password")
+    @Length(min = 8, max = 8, message = "DNI needs to have 8 digits")
+    private int dni;
+
     @NotNull
     private int phoneNumber;
+
     @Email(message = "Email not valid")
     private String email;
 
@@ -27,7 +28,7 @@ public class SaveCustomerResource {
         return name;
     }
 
-    public SaveCustomerResource setName(String name) {
+    public SaveAdministratorResource setName(String name) {
         this.name = name;
         return this;
     }
@@ -36,17 +37,17 @@ public class SaveCustomerResource {
         return password;
     }
 
-    public SaveCustomerResource setPassword(String password) {
+    public SaveAdministratorResource setPassword(String password) {
         this.password = password;
         return this;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public int getDni() {
+        return dni;
     }
 
-    public SaveCustomerResource setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public SaveAdministratorResource setDni(int dni) {
+        this.dni = dni;
         return this;
     }
 
@@ -54,7 +55,7 @@ public class SaveCustomerResource {
         return phoneNumber;
     }
 
-    public SaveCustomerResource setPhoneNumber(int phoneNumber) {
+    public SaveAdministratorResource setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }
@@ -63,7 +64,7 @@ public class SaveCustomerResource {
         return email;
     }
 
-    public SaveCustomerResource setEmail(String email) {
+    public SaveAdministratorResource setEmail(String email) {
         this.email = email;
         return this;
     }

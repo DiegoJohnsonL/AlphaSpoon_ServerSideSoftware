@@ -1,4 +1,11 @@
 package com.gang.alphaspoon.restaurants.domain.repository;
 
-public interface RestaurantRepository {
+import com.gang.alphaspoon.restaurants.domain.model.Restaurant;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import java.util.Optional;
+
+@Repository
+public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
+    Optional<Restaurant> findByEmail(String email);
 }

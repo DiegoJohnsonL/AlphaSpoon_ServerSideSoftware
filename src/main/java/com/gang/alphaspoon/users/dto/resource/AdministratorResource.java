@@ -2,22 +2,20 @@ package com.gang.alphaspoon.users.dto.resource;
 
 import com.gang.alphaspoon.model.AuditModel;
 
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class CustomerResource extends AuditModel {
-       private Long id;
-       private String name;
-       private Date birthday;
-       private int phoneNumber;
-       private String email;
-
+public class AdministratorResource extends AuditModel {
+    private Long id;
+    private String name;
+    private int dni;
+    private int phoneNumber;
+    private String email;
 
     public Long getId() {
         return id;
     }
 
-    public CustomerResource setId(Long id) {
+    public AdministratorResource setId(Long id) {
         this.id = id;
         return this;
     }
@@ -26,17 +24,17 @@ public class CustomerResource extends AuditModel {
         return name;
     }
 
-    public CustomerResource setName(String name) {
+    public AdministratorResource setName(String name) {
         this.name = name;
         return this;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public int getDni() {
+        return dni;
     }
 
-    public CustomerResource setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public AdministratorResource setDni(int dni) {
+        this.dni = dni;
         return this;
     }
 
@@ -44,7 +42,7 @@ public class CustomerResource extends AuditModel {
         return phoneNumber;
     }
 
-    public CustomerResource setPhoneNumber(int phoneNumber) {
+    public AdministratorResource setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }
@@ -53,7 +51,7 @@ public class CustomerResource extends AuditModel {
         return email;
     }
 
-    public CustomerResource setEmail(String email) {
+    public AdministratorResource setEmail(String email) {
         this.email = email;
         return this;
     }

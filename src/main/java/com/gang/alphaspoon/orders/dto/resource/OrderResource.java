@@ -1,4 +1,7 @@
 package com.gang.alphaspoon.orders.dto.resource;
 
-public class OrderResource {
+import com.gang.alphaspoon.model.AuditModel;
+
+public class OrderResource extends AuditModel {
+
 }

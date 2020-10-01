@@ -9,8 +9,8 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-@Table(name = "customers")
-public class Customer extends AuditModel {
+@Table(name = "administrators")
+public class Administrator extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -19,23 +19,21 @@ public class Customer extends AuditModel {
     @NotNull
     private String password;
     @NotNull
-    @Temporal(TemporalType.DATE) //Todo: Change to LocalDateTime Type of variable
-    private Date birthday;
+    private int dni;
     @NotNull
     private int phoneNumber;
     @NotNull
     @Email
     private String email;
 
-
-    public Customer() {
+    public Administrator() {
     }
 
-    public Customer(Long id, @NotNull String name, @NotNull String password, @NotNull Date birthday, @NotNull int phoneNumber, @NotNull @Email String email) {
+    public Administrator(Long id, @NotNull String name, @NotNull String password, @NotNull int dni, @NotNull int phoneNumber, @NotNull @Email String email) {
         this.id = id;
         this.name = name;
         this.password = password;
-        this.birthday = birthday;
+        this.dni = dni;
         this.phoneNumber = phoneNumber;
         this.email = email;
     }
@@ -44,8 +42,17 @@ public class Customer extends AuditModel {
         return id;
     }
 
-    public Customer setId(Long id) {
+    public Administrator setId(Long id) {
         this.id = id;
+        return this;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Administrator setName(String name) {
+        this.name = name;
         return this;
     }
 
@@ -53,17 +60,17 @@ public class Customer extends AuditModel {
         return password;
     }
 
-    public Customer setPassword(String password) {
+    public Administrator setPassword(String password) {
         this.password = password;
         return this;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public int getDni() {
+        return dni;
     }
 
-    public Customer setBirthday(Date birthday) {
-        this.birthday = birthday;
+    public Administrator setDni(int dni) {
+        this.dni = dni;
         return this;
     }
 
@@ -71,7 +78,7 @@ public class Customer extends AuditModel {
         return phoneNumber;
     }
 
-    public Customer setPhoneNumber(int phoneNumber) {
+    public Administrator setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }
@@ -80,17 +87,8 @@ public class Customer extends AuditModel {
         return email;
     }
 
-    public Customer setEmail(String email) {
+    public Administrator setEmail(String email) {
         this.email = email;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Customer setName(String name) {
-        this.name = name;
         return this;
     }
 }
