@@ -1,7 +1,12 @@
 package com.gang.alphaspoon.orders.domain.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gang.alphaspoon.model.AuditModel;
+import com.gang.alphaspoon.restaurants.domain.model.Restaurant;
+import com.gang.alphaspoon.users.domain.model.Customer;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,6 +28,12 @@ public class Order extends AuditModel {
 
     @Column(name="total", nullable = false)
     private Double total;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "restaurant_id", nullable = false) // cual va a ser la columna que hara de foreing key en la tabla de comment
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore // en caso se creo un archivo JSON, no agregar la columna post
+    private Customer customer;
 
     public Long getId() {
         return id;
@@ -57,6 +68,15 @@ public class Order extends AuditModel {
 
     public Order setTotal(Double total) {
         this.total = total;
+        return this;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public Order setCustomer(Customer customer) {
+        this.customer = customer;
         return this;
     }
 }
