@@ -19,7 +19,7 @@ public class Customer extends AuditModel {
     @NotNull
     private String password;
     @NotNull
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE) //Todo: Change to LocalDateTime Type of variable
     private Date birthday;
     @NotNull
     private int phoneNumber;
@@ -27,15 +27,17 @@ public class Customer extends AuditModel {
     @Email
     private String email;
 
-    public Customer(Long id, @NotNull String name, @NotNull String password, @NotNull int phoneNumber, @NotNull @Email String email) {
+
+    public Customer() {
+    }
+
+    public Customer(Long id, @NotNull String name, @NotNull String password, @NotNull Date birthday, @NotNull int phoneNumber, @NotNull @Email String email) {
         this.id = id;
         this.name = name;
         this.password = password;
+        this.birthday = birthday;
         this.phoneNumber = phoneNumber;
         this.email = email;
-    }
-
-    public Customer() {
     }
 
     public Long getId() {

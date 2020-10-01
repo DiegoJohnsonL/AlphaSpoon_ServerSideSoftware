@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/customers")
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
@@ -24,35 +24,37 @@ public class CustomerController {
     private ModelMapper mapper;
 
 
-    @GetMapping("/customers")
+    @GetMapping
     public Page<CustomerResource> getAllCustomers(Pageable pageable){
         List<CustomerResource> resources = customerService.getAllCustomer(pageable).getContent()
                 .stream().map(this::convertToResource).collect(Collectors.toList());
         return new PageImpl<>(resources, pageable,resources.size());
     }
 
-    @GetMapping("/customers/{customerId}")
+    @GetMapping("/{customerId}")
     public CustomerResource getCustomerById(
             @PathVariable(name = "customerId")Long customerId){
         return convertToResource(customerService.getCustomerById(customerId));
     }
-    @GetMapping("/customers/{customerEmail:.+}")
+    @GetMapping("/{customerEmail:.+}")
     public CustomerResource getCustomerById(@PathVariable(name = "customerEmail") String customerEmail){
         return convertToResource(customerService.getCustomerByEmail(customerEmail));
     }
 
-    @PostMapping("/tags")
-    public CustomerResource createCustomer(@Valid @RequestBody SaveCustomerResource customerResource){
-        return convertToResource(customerService.create(convertToEntity(customerResource)));
+    @PostMapping
+    public CustomerResource createCustomer(
+            @Valid @RequestBody SaveCustomerResource customerResource){
+        return convertToResource(customerService
+                .create(convertToEntity(customerResource)));
     }
 
-    @PutMapping("/customers/{customerId}")
+    @PutMapping("/{customerId}")
     public CustomerResource updateCustomer(@PathVariable(name = "customerId") Long customerId,
                                            SaveCustomerResource customerResource){
         return convertToResource(customerService.updateCustomer(customerId, convertToEntity(customerResource)));
     }
 
-    @DeleteMapping("/customers/{customerId}")
+    @DeleteMapping("/{customerId}")
     public ResponseEntity<?> deleteCustomer(@PathVariable(name = "customerId") Long customerId){
         return customerService.deleteCustomer(customerId);
     }
