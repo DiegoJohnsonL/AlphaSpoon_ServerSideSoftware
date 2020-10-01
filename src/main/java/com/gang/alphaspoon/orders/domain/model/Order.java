@@ -30,7 +30,7 @@ public class Order extends AuditModel {
     private Double total;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "restaurant_id", nullable = false) // cual va a ser la columna que hara de foreing key en la tabla de comment
+    @JoinColumn(name = "customer_id", nullable = false) // cual va a ser la columna que hara de foreing key en la tabla de comment
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore // en caso se creo un archivo JSON, no agregar la columna post
     private Customer customer;
