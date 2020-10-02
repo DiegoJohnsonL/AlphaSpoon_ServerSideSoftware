@@ -13,6 +13,7 @@ public class SaveProductResource {
     @NotNull(message = "El precio es requerido")
     private Double price;
 
+
     public String getName() {
         return name;
     }

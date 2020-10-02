@@ -21,12 +21,13 @@ public class Product extends AuditModel {
 
     @NotNull
     private Double price;
+    //TODO: delete this todo
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "restaurant_id", nullable = false) // cual va a ser la columna que hara de foreing key en la tabla de comment
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore // en caso se creo un archivo JSON, no agregar la columna post
-    private Restaurant restaurant;
+    //@ManyToOne(fetch = FetchType.LAZY, optional = false)// Un Restaurant puede tener varios Products - muchos a uno - Al crear no quiero un Products sin un Restaurant(optional = false)
+    //@JoinColumn(name = "restaurant_id", nullable = false) // cual va a ser la columna que hara de foreing key en la tabla de comment
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    //@JsonIgnore // en caso se creo un archivo JSON, no agregar la columna post
+    //private Restaurant restaurant;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "product_tags", joinColumns = {@JoinColumn(name = "product_id")}, inverseJoinColumns = {@JoinColumn(name="tag_id")})
@@ -95,12 +96,7 @@ public class Product extends AuditModel {
         return this;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
+    //public Restaurant getRestaurant() {     return restaurant;   }
 
-    public Product setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
-        return this;
-    }
+    //public Product setRestaurant(Restaurant restaurant) { this.restaurant = restaurant; return this;  }
 }

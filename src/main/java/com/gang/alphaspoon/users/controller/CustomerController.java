@@ -31,12 +31,12 @@ public class CustomerController {
         return new PageImpl<>(resources, pageable,resources.size());
     }
 
-    @GetMapping("/{customerId}")
+    @GetMapping("/id/{customerId}")
     public CustomerResource getCustomerById(
             @PathVariable(name = "customerId")Long customerId){
         return convertToResource(customerService.getCustomerById(customerId));
     }
-    @GetMapping("/{customerEmail:.+}")
+    @GetMapping("/email/{customerEmail:.+}")
     public CustomerResource getCustomerByEmail(@PathVariable(name = "customerEmail") String customerEmail){
         return convertToResource(customerService.getCustomerByEmail(customerEmail));
     }

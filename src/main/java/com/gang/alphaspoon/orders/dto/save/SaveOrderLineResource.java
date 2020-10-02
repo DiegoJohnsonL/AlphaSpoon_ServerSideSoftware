@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 public class SaveOrderLineResource {
 
     @NotNull
-    private SaveProductResource product;
+    private Long productId;
     @NotNull
     private Double price;
     @NotNull
