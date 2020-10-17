@@ -3,7 +3,7 @@ package com.gang.alphaspoon.dtos.request;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class SaveTagResource {
+public class TagRequest {
     @NotNull
     @Size(max = 100)
     private String name;
@@ -11,7 +11,7 @@ public class SaveTagResource {
         return name;
     }
 
-    public SaveTagResource setName(String name) {
+    public TagRequest setName(String name) {
         this.name = name;
         return this;
     }

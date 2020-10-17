@@ -1,8 +1,8 @@
 package com.gang.alphaspoon.controllers;
 import com.gang.alphaspoon.domain.entity.Customer;
 import com.gang.alphaspoon.domain.service.CustomerService;
-import com.gang.alphaspoon.users.dto.resource.CustomerResource;
-import com.gang.alphaspoon.users.dto.save.SaveCustomerResource;
+import com.gang.alphaspoon.dtos.request.CustomerRequest;
+import com.gang.alphaspoon.dtos.resource.CustomerResource;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,14 +43,14 @@ public class CustomerController {
 
     @PostMapping
     public CustomerResource createCustomer(
-            @Valid @RequestBody SaveCustomerResource customerResource){
+            @Valid @RequestBody CustomerRequest customerResource){
         return convertToResource(customerService
                 .create(convertToEntity(customerResource)));
     }
 
     @PutMapping("/{customerId}")
     public CustomerResource updateCustomer(@PathVariable(name = "customerId") Long customerId,
-                                           SaveCustomerResource customerResource){
+                                           CustomerRequest customerResource){
         return convertToResource(customerService.updateCustomer(customerId, convertToEntity(customerResource)));
     }
 
@@ -59,6 +59,6 @@ public class CustomerController {
         return customerService.deleteCustomer(customerId);
     }
 
-    private Customer convertToEntity(SaveCustomerResource resource){return mapper.map(resource,Customer.class);}
+    private Customer convertToEntity(CustomerRequest resource){return mapper.map(resource,Customer.class);}
     private CustomerResource convertToResource(Customer entity){return mapper.map(entity, CustomerResource.class);}
 }

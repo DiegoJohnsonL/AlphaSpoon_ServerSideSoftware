@@ -3,7 +3,7 @@ package com.gang.alphaspoon.controllers;
 import com.gang.alphaspoon.domain.entity.Order;
 import com.gang.alphaspoon.domain.service.OrderService;
 import com.gang.alphaspoon.dtos.resource.OrderResource;
-import com.gang.alphaspoon.dtos.request.SaveOrderResource;
+import com.gang.alphaspoon.dtos.request.OrderRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,12 +40,12 @@ public class OrderController {
     }
 
     @PostMapping
-    public OrderResource createOrder(@Valid @RequestBody SaveOrderResource resource) {
+    public OrderResource createOrder(@Valid @RequestBody OrderRequest resource) {
         return convertToResource(orderService.createOrder(convertToEntity(resource)));
     }
 
     @PutMapping
-    public OrderResource updateOrder(@Valid @RequestBody SaveOrderResource order){
+    public OrderResource updateOrder(@Valid @RequestBody OrderRequest order){
         return convertToResource(orderService.createOrder(convertToEntity(order)));
     }
 
@@ -54,7 +54,7 @@ public class OrderController {
         return orderService.deleteOrder(orderId);
     }
 
-    private Order convertToEntity(SaveOrderResource resource){return mapper.map(resource,Order.class);}
+    private Order convertToEntity(OrderRequest resource){return mapper.map(resource,Order.class);}
     private OrderResource convertToResource(Order entity){return mapper.map(entity, OrderResource.class);}
 
 }

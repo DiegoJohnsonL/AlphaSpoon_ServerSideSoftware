@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
-public class SaveAdministratorResource {
+public class AdministratorRequest {
     @NotNull(message = "Missing customer name")
     @Length(min = 3, message = "Name needs to have between 3 to 50 characters")
     private String name;
@@ -28,7 +28,7 @@ public class SaveAdministratorResource {
         return name;
     }
 
-    public SaveAdministratorResource setName(String name) {
+    public AdministratorRequest setName(String name) {
         this.name = name;
         return this;
     }
@@ -37,7 +37,7 @@ public class SaveAdministratorResource {
         return password;
     }
 
-    public SaveAdministratorResource setPassword(String password) {
+    public AdministratorRequest setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -46,7 +46,7 @@ public class SaveAdministratorResource {
         return dni;
     }
 
-    public SaveAdministratorResource setDni(int dni) {
+    public AdministratorRequest setDni(int dni) {
         this.dni = dni;
         return this;
     }
@@ -55,7 +55,7 @@ public class SaveAdministratorResource {
         return phoneNumber;
     }
 
-    public SaveAdministratorResource setPhoneNumber(int phoneNumber) {
+    public AdministratorRequest setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }
@@ -64,7 +64,7 @@ public class SaveAdministratorResource {
         return email;
     }
 
-    public SaveAdministratorResource setEmail(String email) {
+    public AdministratorRequest setEmail(String email) {
         this.email = email;
         return this;
     }

@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
 
-public class SaveProductResource {
+public class ProductRequest {
 
     @NotNull(message = "Missing Product name")
     @Length(min = 3, max = 100, message = "Name needs to have between 3 to 50 characters")
@@ -16,7 +16,7 @@ public class SaveProductResource {
         return name;
     }
 
-    public SaveProductResource setName(String name) {
+    public ProductRequest setName(String name) {
         this.name = name;
         return this;
     }
@@ -25,7 +25,7 @@ public class SaveProductResource {
         return price;
     }
 
-    public SaveProductResource setPrice(Double price) {
+    public ProductRequest setPrice(Double price) {
         this.price = price;
         return this;
     }

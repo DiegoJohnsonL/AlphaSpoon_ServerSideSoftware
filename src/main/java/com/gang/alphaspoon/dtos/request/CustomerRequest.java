@@ -7,7 +7,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class SaveCustomerResource {
+public class CustomerRequest {
 
     @NotNull(message = "Missing customer name")
     @Length(min = 3, message = "Name needs to have between 3 to 50 characters")
@@ -27,7 +27,7 @@ public class SaveCustomerResource {
         return name;
     }
 
-    public SaveCustomerResource setName(String name) {
+    public CustomerRequest setName(String name) {
         this.name = name;
         return this;
     }
@@ -36,7 +36,7 @@ public class SaveCustomerResource {
         return password;
     }
 
-    public SaveCustomerResource setPassword(String password) {
+    public CustomerRequest setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -45,7 +45,7 @@ public class SaveCustomerResource {
         return birthday;
     }
 
-    public SaveCustomerResource setBirthday(Date birthday) {
+    public CustomerRequest setBirthday(Date birthday) {
         this.birthday = birthday;
         return this;
     }
@@ -54,7 +54,7 @@ public class SaveCustomerResource {
         return phoneNumber;
     }
 
-    public SaveCustomerResource setPhoneNumber(int phoneNumber) {
+    public CustomerRequest setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }
@@ -63,7 +63,7 @@ public class SaveCustomerResource {
         return email;
     }
 
-    public SaveCustomerResource setEmail(String email) {
+    public CustomerRequest setEmail(String email) {
         this.email = email;
         return this;
     }
