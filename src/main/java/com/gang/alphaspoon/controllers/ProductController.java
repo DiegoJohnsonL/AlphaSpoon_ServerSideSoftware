@@ -3,8 +3,8 @@ package com.gang.alphaspoon.controllers;
 
 import com.gang.alphaspoon.domain.entity.Product;
 import com.gang.alphaspoon.domain.service.ProductService;
-import com.gang.alphaspoon.restaurants.dto.resource.ProductResource;
-import com.gang.alphaspoon.restaurants.dto.save.SaveProductResource;
+import com.gang.alphaspoon.dtos.request.ProductRequest;
+import com.gang.alphaspoon.dtos.resource.ProductResource;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -39,12 +39,12 @@ public class ProductController {
     }
 
     @PostMapping("/products")
-    public ProductResource createProduct(@Valid @RequestBody SaveProductResource productResource){
+    public ProductResource createProduct(@Valid @RequestBody ProductRequest productResource){
         return convertToResource(productService.createProduct(convertToEntity(productResource)));
     }
 
     @PutMapping("/products/{productId}")
-    public ProductResource updateProduct(@PathVariable(name = "productId")Long productId, SaveProductResource productResource){
+    public ProductResource updateProduct(@PathVariable(name = "productId")Long productId, ProductRequest productResource){
         return convertToResource(productService.updateProduct(productId, convertToEntity(productResource)));
     }
     @DeleteMapping("/products/{productId}")
@@ -70,6 +70,6 @@ public class ProductController {
     }
 
 
-    private Product convertToEntity(@Valid SaveProductResource resource){return mapper.map(resource,Product.class);}
+    private Product convertToEntity(@Valid ProductRequest resource){return mapper.map(resource,Product.class);}
     private ProductResource convertToResource(Product entity){return mapper.map(entity, ProductResource.class);}
 }

@@ -1,8 +1,8 @@
 package com.gang.alphaspoon.controllers;
 import com.gang.alphaspoon.domain.entity.Administrator;
 import com.gang.alphaspoon.domain.service.AdministratorService;
-import com.gang.alphaspoon.users.dto.resource.AdministratorResource;
-import com.gang.alphaspoon.users.dto.save.SaveAdministratorResource;
+import com.gang.alphaspoon.dtos.request.AdministratorRequest;
+import com.gang.alphaspoon.dtos.resource.AdministratorResource;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -44,13 +44,13 @@ public class AdministratorController {
         return convertToResource(administratorService.getAdministratorByDni(dni)); }
 
     @PostMapping
-    public AdministratorResource createAdministrator(@Valid @RequestBody SaveAdministratorResource administratorResource){
+    public AdministratorResource createAdministrator(@Valid @RequestBody AdministratorRequest administratorResource){
         return convertToResource(administratorService.create(convertToEntity(administratorResource)));
     }
 
     @PutMapping("/{adminId}")
     public AdministratorResource updateAdministrator(@PathVariable(name = "adminId") Long adminId,
-                                           SaveAdministratorResource administratorResource){
+                                           AdministratorRequest administratorResource){
         return convertToResource(administratorService.updateAdministrator(adminId, convertToEntity(administratorResource)));
     }
 
@@ -59,6 +59,6 @@ public class AdministratorController {
         return administratorService.deleteAdministrator(adminId);
     }
 
-    private Administrator convertToEntity(SaveAdministratorResource resource){return mapper.map(resource,Administrator.class);}
+    private Administrator convertToEntity(AdministratorRequest resource){return mapper.map(resource,Administrator.class);}
     private AdministratorResource convertToResource(Administrator entity){return mapper.map(entity, AdministratorResource.class);}
 }

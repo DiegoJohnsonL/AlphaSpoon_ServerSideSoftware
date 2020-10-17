@@ -2,8 +2,8 @@ package com.gang.alphaspoon.controllers;
 
 import com.gang.alphaspoon.domain.entity.Restaurant;
 import com.gang.alphaspoon.domain.service.RestaurantService;
-import com.gang.alphaspoon.restaurants.dto.resource.RestaurantResource;
-import com.gang.alphaspoon.restaurants.dto.save.SaveRestaurantResource;
+import com.gang.alphaspoon.dtos.request.RestaurantRequest;
+import com.gang.alphaspoon.dtos.resource.RestaurantResource;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,14 +45,14 @@ public class RestaurantController {
     }
     @PostMapping
     public RestaurantResource createRestaurant(
-            @Valid @RequestBody SaveRestaurantResource restaurantResource){
+            @Valid @RequestBody RestaurantRequest restaurantResource){
         return convertToResource(restaurantService
                 .create(convertToEntity(restaurantResource)));
     }
     @PutMapping("/{restaurantId}")
     public  RestaurantResource updateRestaurant(
             @PathVariable(name = "restaurantId") Long restaurantId,
-            @Valid @RequestBody SaveRestaurantResource restaurantResource){
+            @Valid @RequestBody RestaurantRequest restaurantResource){
         return convertToResource(restaurantService.updateRestaurant(restaurantId, convertToEntity(restaurantResource)));
     }
 
@@ -61,6 +61,6 @@ public class RestaurantController {
             @PathVariable(name = "restaurantId") Long restaurantId){
         return restaurantService.deleteRestaurant(restaurantId);
     }
-    private Restaurant convertToEntity(@Valid SaveRestaurantResource resource){return mapper.map(resource,Restaurant.class);}
+    private Restaurant convertToEntity(@Valid RestaurantRequest resource){return mapper.map(resource,Restaurant.class);}
     private RestaurantResource convertToResource(Restaurant entity){return mapper.map(entity, RestaurantResource.class);}
 }

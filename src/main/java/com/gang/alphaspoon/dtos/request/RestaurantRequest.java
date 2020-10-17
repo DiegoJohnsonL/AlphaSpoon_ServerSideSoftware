@@ -5,7 +5,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
-public class SaveRestaurantResource {
+public class RestaurantRequest {
 
     @NotNull(message = "Missing Restaurant name")
     @Length(min = 3, message = "Name needs to have between 3 to 50 characters")
@@ -19,7 +19,7 @@ public class SaveRestaurantResource {
         return name;
     }
 
-    public SaveRestaurantResource setName(String name) {
+    public RestaurantRequest setName(String name) {
         this.name = name;
         return this;
     }
@@ -28,7 +28,7 @@ public class SaveRestaurantResource {
         return phoneNumber;
     }
 
-    public SaveRestaurantResource setPhoneNumber(int phoneNumber) {
+    public RestaurantRequest setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }
@@ -37,7 +37,7 @@ public class SaveRestaurantResource {
         return email;
     }
 
-    public SaveRestaurantResource setEmail(String email) {
+    public RestaurantRequest setEmail(String email) {
         this.email = email;
         return this;
     }

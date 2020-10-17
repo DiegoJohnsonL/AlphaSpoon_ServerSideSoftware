@@ -1,14 +1,13 @@
 package com.gang.alphaspoon.dtos.request;
 
-import com.gang.alphaspoon.restaurants.dto.save.SaveProductResource;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class SaveOrderLineResource {
+public class OrderLineRequest {
 
     @NotNull
-    private SaveProductResource product;
+    private ProductRequest product;
     @NotNull
     private Double price;
     @NotNull
