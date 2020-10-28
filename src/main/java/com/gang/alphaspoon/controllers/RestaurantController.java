@@ -2,8 +2,8 @@ package com.gang.alphaspoon.controllers;
 
 import com.gang.alphaspoon.domain.entity.Restaurant;
 import com.gang.alphaspoon.domain.service.RestaurantService;
-import com.gang.alphaspoon.dtos.request.RestaurantRequest;
-import com.gang.alphaspoon.dtos.resource.RestaurantResource;
+import com.gang.alphaspoon.dtos.requests.RestaurantRequest;
+import com.gang.alphaspoon.dtos.resources.RestaurantResource;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

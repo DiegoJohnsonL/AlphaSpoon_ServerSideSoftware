@@ -3,8 +3,8 @@ package com.gang.alphaspoon.controllers;
 
 import com.gang.alphaspoon.domain.entity.Product;
 import com.gang.alphaspoon.domain.service.ProductService;
-import com.gang.alphaspoon.dtos.request.ProductRequest;
-import com.gang.alphaspoon.dtos.resource.ProductResource;
+import com.gang.alphaspoon.dtos.requests.ProductRequest;
+import com.gang.alphaspoon.dtos.resources.ProductResource;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

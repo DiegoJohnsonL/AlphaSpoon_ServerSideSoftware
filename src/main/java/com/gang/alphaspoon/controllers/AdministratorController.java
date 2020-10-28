@@ -1,8 +1,8 @@
 package com.gang.alphaspoon.controllers;
 import com.gang.alphaspoon.domain.entity.Administrator;
 import com.gang.alphaspoon.domain.service.AdministratorService;
-import com.gang.alphaspoon.dtos.request.AdministratorRequest;
-import com.gang.alphaspoon.dtos.resource.AdministratorResource;
+import com.gang.alphaspoon.dtos.requests.AdministratorRequest;
+import com.gang.alphaspoon.dtos.resources.AdministratorResource;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

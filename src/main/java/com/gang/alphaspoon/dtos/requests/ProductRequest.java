@@ -1,4 +1,4 @@
-package com.gang.alphaspoon.dtos.request;
+package com.gang.alphaspoon.dtos.requests;
 
 import org.hibernate.validator.constraints.Length;
 
