@@ -1,6 +1,7 @@
 package com.gang.alphaspoon.dtos.resource;
 
 import com.gang.alphaspoon.domain.entity.AuditModel;
+import com.gang.alphaspoon.restaurants.dto.resource.ProductResource;
 
 public class OrderLineResource extends AuditModel {
     private Long id;

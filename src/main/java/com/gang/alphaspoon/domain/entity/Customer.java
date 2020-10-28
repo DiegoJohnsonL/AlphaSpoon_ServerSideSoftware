@@ -1,16 +1,12 @@
 package com.gang.alphaspoon.domain.entity;
 
 
-import lombok.Builder;
-
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
-@Builder
 @Table(name = "customers")
 public class Customer extends AuditModel {
     @Id
@@ -19,7 +15,6 @@ public class Customer extends AuditModel {
     @NotNull
     private String name;
     @NotNull
-    @Size (max = 150)
     private String password;
     @NotNull
     @Temporal(TemporalType.DATE) //Todo: Change to LocalDateTime Type of variable

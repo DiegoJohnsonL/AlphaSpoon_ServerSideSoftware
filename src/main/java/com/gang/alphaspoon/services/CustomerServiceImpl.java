@@ -1,21 +1,14 @@
 package com.gang.alphaspoon.services;
 
-import com.gang.alphaspoon.exceptions.GeneralServiceException;
-import com.gang.alphaspoon.exceptions.NoDataFoundException;
 import com.gang.alphaspoon.exceptions.ResourceNotFoundException;
 import com.gang.alphaspoon.domain.entity.Customer;
 import com.gang.alphaspoon.domain.repository.CustomerRepository;
 import com.gang.alphaspoon.domain.service.CustomerService;
-import com.gang.alphaspoon.exceptions.ValidateServiceException;
-import com.gang.alphaspoon.validators.CustomerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
-import javax.validation.Valid;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -42,21 +35,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    @Transactional
-    public Customer createCustomer(Customer customer) {
-        try {
-            CustomerValidator.validate(customer);
-
-            Customer existCustomer = customerRepository.findByEmail(customer.getEmail())
-                    .orElse(null);
-            if(existCustomer!=null)
-                throw new ValidateServiceException("El correo ya esta en uso");
-            return customerRepository.save(customer);
-        } catch (ValidateServiceException | NoDataFoundException e){
-            throw e;
-        } catch (Exception e) {
-            throw new GeneralServiceException(e.getMessage(), e);
-        }
+    public Customer create(Customer customer) {
+        return customerRepository.save(customer);
     }
 
     @Override

@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface CustomerService {
     Page<Customer> getAllCustomer(Pageable pageable);
-    Customer createCustomer(Customer customer);
+    Customer create(Customer customer);
     Customer getCustomerByEmail(String email);
     Customer getCustomerById(Long customerId);
     Customer updateCustomer(Long customerId, Customer customer);

@@ -1,28 +1,15 @@
 package com.gang.alphaspoon.dtos.resource;
 
 import com.gang.alphaspoon.domain.entity.AuditModel;
-import lombok.Builder;
 
 import java.util.Date;
 
-@Builder
 public class CustomerResource extends AuditModel {
        private Long id;
        private String name;
        private Date birthday;
        private int phoneNumber;
        private String email;
-
-    public CustomerResource(Long id, String name, Date birthday, int phoneNumber, String email) {
-        this.id = id;
-        this.name = name;
-        this.birthday = birthday;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-    }
-
-    public CustomerResource() {
-    }
 
 
     public Long getId() {
