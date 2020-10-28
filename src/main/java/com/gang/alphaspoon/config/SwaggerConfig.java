@@ -20,7 +20,7 @@ public class SwaggerConfig {
     public Docket apiDocket() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.upc.orderapi.controllers"))
+                .apis(RequestHandlerSelectors.basePackage("com.gang.alphaspoon.controllers"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(getApiInfo())
@@ -29,11 +29,11 @@ public class SwaggerConfig {
 
     private ApiInfo getApiInfo() {
         return new ApiInfo(
-                "Order Service API",
-                "Order Service API Description",
+                "Alpha Spoon API",
+                "Backend RESTful API for Alpha Spoon Web Application",
                 "1.0",
-                "http://hampcode.com/terms",
-                new Contact("HampCode", "http://hampcode.com", "apis@hampcode.com"),
+                "https://xerathox.github.io/Alpha-Spoon/terms",
+                new Contact("Alpha Spoon", "https://xerathox.github.io/Alpha-Spoon/", "apis@hampcode.com"),
                 "LICENSE",
                 "LICENSE URL",
                 Collections.emptyList()
