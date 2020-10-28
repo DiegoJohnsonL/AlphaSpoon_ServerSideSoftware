@@ -1,10 +1,8 @@
-package com.gang.alphaspoon.dtos.request;
+package com.gang.alphaspoon.dtos.requests;
 
-import lombok.Builder;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import java.util.Date;

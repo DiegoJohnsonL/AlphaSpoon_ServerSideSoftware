@@ -1,4 +1,4 @@
-package com.gang.alphaspoon.dtos.resource;
+package com.gang.alphaspoon.dtos.resources;
 
 
 import com.gang.alphaspoon.domain.entity.AuditModel;

@@ -1,8 +1,8 @@
 package com.gang.alphaspoon.converters;
 
 import com.gang.alphaspoon.domain.entity.Customer;
-import com.gang.alphaspoon.dtos.request.SignupRequest;
-import com.gang.alphaspoon.dtos.resource.CustomerResource;
+import com.gang.alphaspoon.dtos.requests.SignupRequest;
+import com.gang.alphaspoon.dtos.resources.CustomerResource;
 
 public class CustomerConverter extends AbstractConverter<Customer, CustomerResource>{
     @Override

@@ -1,4 +1,4 @@
-package com.gang.alphaspoon.dtos.request;
+package com.gang.alphaspoon.dtos.requests;
 
 
 import javax.validation.constraints.NotNull;
