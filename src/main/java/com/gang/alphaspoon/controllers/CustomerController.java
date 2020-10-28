@@ -1,8 +1,11 @@
 package com.gang.alphaspoon.controllers;
+import com.gang.alphaspoon.converters.CustomerConverter;
 import com.gang.alphaspoon.domain.entity.Customer;
 import com.gang.alphaspoon.domain.service.CustomerService;
 import com.gang.alphaspoon.dtos.request.CustomerRequest;
+import com.gang.alphaspoon.dtos.request.SignupRequest;
 import com.gang.alphaspoon.dtos.resource.CustomerResource;
+import com.gang.alphaspoon.utils.WrapperResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +25,8 @@ public class CustomerController {
     private CustomerService customerService;
     @Autowired
     private ModelMapper mapper;
+    @Autowired
+    CustomerConverter customerConverter;
 
 
     @GetMapping
@@ -45,7 +50,13 @@ public class CustomerController {
     public CustomerResource createCustomer(
             @Valid @RequestBody CustomerRequest customerResource){
         return convertToResource(customerService
-                .create(convertToEntity(customerResource)));
+                .createCustomer(convertToEntity(customerResource)));
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<WrapperResponse<CustomerResource>> signup(@RequestBody SignupRequest request){
+        Customer customer = customerService.createCustomer(customerConverter.signup(request));
+        return new WrapperResponse<>( true , "success", customerConverter.fromEntity(customer)).createResponse();
     }
 
     @PutMapping("/{customerId}")
