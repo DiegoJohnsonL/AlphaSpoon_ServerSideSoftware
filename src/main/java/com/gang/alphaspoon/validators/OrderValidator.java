@@ -1,8 +1,8 @@
 package com.gang.alphaspoon.validators;
 
 import com.gang.alphaspoon.exceptions.ValidateServiceException;
-import com.gang.alphaspoon.domain.entity.Order;
-import com.gang.alphaspoon.domain.entity.OrderLine;
+import com.gang.alphaspoon.entity.Order;
+import com.gang.alphaspoon.entity.OrderLine;
 
 public class OrderValidator {
     public static void save(Order order) {

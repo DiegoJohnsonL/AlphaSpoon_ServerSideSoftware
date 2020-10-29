@@ -1,9 +1,9 @@
 package com.gang.alphaspoon.controllers;
 
-import com.gang.alphaspoon.domain.entity.Order;
-import com.gang.alphaspoon.domain.service.OrderService;
-import com.gang.alphaspoon.dtos.resource.OrderResource;
-import com.gang.alphaspoon.dtos.request.OrderRequest;
+import com.gang.alphaspoon.entity.Order;
+import com.gang.alphaspoon.services.OrderService;
+import com.gang.alphaspoon.dtos.resources.OrderResource;
+import com.gang.alphaspoon.dtos.requests.OrderRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
