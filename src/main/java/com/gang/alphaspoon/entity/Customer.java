@@ -30,10 +30,8 @@ public class Customer extends AuditModel {
     @Email
     private String email;
 
-
     public Customer() {
     }
-
     public Customer(Long id, @NotNull String name, @NotNull String password, @NotNull Date birthday, @NotNull int phoneNumber, @NotNull @Email String email) {
         this.id = id;
         this.name = name;

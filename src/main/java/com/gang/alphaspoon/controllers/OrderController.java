@@ -1,9 +1,10 @@
 package com.gang.alphaspoon.controllers;
 
+import com.gang.alphaspoon.converters.OrderConverter;
+import com.gang.alphaspoon.dtos.OrderDTO;
 import com.gang.alphaspoon.entity.Order;
 import com.gang.alphaspoon.services.OrderService;
-import com.gang.alphaspoon.dtos.resources.OrderResource;
-import com.gang.alphaspoon.dtos.requests.OrderRequest;
+import com.gang.alphaspoon.utils.WrapperResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,44 +18,43 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping
 public class OrderController {
 
     @Autowired
     private OrderService orderService;
+
     @Autowired
-    private ModelMapper mapper;
+    private OrderConverter converter;
 
-    @GetMapping
-    public Page<OrderResource> getAllOrders(
-            @RequestParam(name = "pageNumber", required = false, defaultValue = "0") int pageNumber,
-            @RequestParam(name = "pageSize", required = false, defaultValue = "5") int pageSize, Pageable pageable){
-        List<OrderResource> resourceList = orderService.getAllOrders(pageable).getContent()
-                .stream().map(this::convertToResource).collect(Collectors.toList());
-        return new PageImpl<>(resourceList, pageable, resourceList.size()) ;
+    @GetMapping("/customers/{customerId}/orders")
+    public ResponseEntity<WrapperResponse<Page<OrderDTO>>> getAllOrdersByCustomerId(
+            @PathVariable(name = "customerId") Long customerId, Pageable pageable){
+        List<OrderDTO> resourceList = orderService.getAllOrdersByCustomerId(customerId, pageable).getContent()
+                .stream().map(converter::fromEntity).collect(Collectors.toList());
+        Page<OrderDTO> page = new PageImpl<>(resourceList, pageable, resourceList.size());
+        return new WrapperResponse<>(true, "success", page).createResponse();
     }
 
-    @GetMapping("{orderId}")
-    public OrderResource getOrderById(@PathVariable(name="orderId") Long orderId){
-        return convertToResource(orderService.getOrderById(orderId));
+    @GetMapping("/customers/{customerId}/orders/{orderId}")
+    public ResponseEntity<WrapperResponse<OrderDTO>> getOrderByIdAndCustomerId(@PathVariable(name = "customerId") Long customerId,
+                                                    @PathVariable(name="orderId") Long orderId){
+        return new WrapperResponse<>(true, "success", converter.fromEntity(orderService.getOrderByIdAndCustomerId(orderId, customerId))).createResponse();
     }
 
-    @PostMapping
-    public OrderResource createOrder(@Valid @RequestBody OrderRequest resource) {
-        return convertToResource(orderService.createOrder(convertToEntity(resource)));
+    @PostMapping("/customers/{customerId}/orders")
+    public ResponseEntity<WrapperResponse<OrderDTO>> createOrder(@PathVariable(name = "customerId") Long customerId, @RequestBody OrderDTO order) {
+        return new WrapperResponse<>(true, "success", converter.fromEntity(orderService.createOrder(customerId, converter.fromDTO(order)))).createResponse();
     }
 
-    @PutMapping
-    public OrderResource updateOrder(@Valid @RequestBody OrderRequest order){
-        return convertToResource(orderService.createOrder(convertToEntity(order)));
+    @PutMapping("/customers/{customerId}/orders/{orderId}")
+    public ResponseEntity<WrapperResponse<OrderDTO>> updateOrder(@PathVariable(name = "customerId") Long customerId, @RequestBody OrderDTO order){
+        return new WrapperResponse<>(true, "success", converter.fromEntity(orderService.createOrder(customerId, converter.fromDTO(order)))).createResponse();
     }
 
-    @DeleteMapping("/{orderId}")
-    public ResponseEntity<?> deleteOrder(@PathVariable(name="orderId") Long orderId){
-        return orderService.deleteOrder(orderId);
+    @DeleteMapping("/customers/{customerId}/orders/{orderId}")
+    public ResponseEntity<?> deleteOrder(@PathVariable(name = "customerId") Long customerId, @PathVariable(name="orderId") Long orderId){
+        return new WrapperResponse<>(true, "success", orderService.deleteOrder(customerId, orderId)).createResponse();
     }
-
-    private Order convertToEntity(OrderRequest resource){return mapper.map(resource,Order.class);}
-    private OrderResource convertToResource(Order entity){return mapper.map(entity, OrderResource.class);}
 
 }

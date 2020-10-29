@@ -2,6 +2,7 @@ package com.gang.alphaspoon.dtos.requests;
 
 import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class ProductRequest {
@@ -29,4 +30,5 @@ public class ProductRequest {
         this.price = price;
         return this;
     }
+
 }

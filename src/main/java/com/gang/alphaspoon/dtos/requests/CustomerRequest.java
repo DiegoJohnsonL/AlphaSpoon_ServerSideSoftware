@@ -29,8 +29,6 @@ public class CustomerRequest {
         return this;
     }
 
-
-
     public Date getBirthday() {
         return birthday;
     }

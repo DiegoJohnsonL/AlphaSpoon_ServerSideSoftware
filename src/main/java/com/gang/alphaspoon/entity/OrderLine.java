@@ -1,9 +1,12 @@
 package com.gang.alphaspoon.entity;
 
+import lombok.Builder;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name="order_lines")
+@Builder
 public class OrderLine extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -10,19 +10,20 @@ public class CustomerResource extends AuditModel {
        private Long id;
        private String name;
        private Date birthday;
+       private String password;
        private int phoneNumber;
        private String email;
 
-    public CustomerResource(Long id, String name, Date birthday, int phoneNumber, String email) {
+    public CustomerResource(Long id, String name, Date birthday, String password, int phoneNumber, String email) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
+        this.password = password;
         this.phoneNumber = phoneNumber;
         this.email = email;
     }
 
     public CustomerResource() {
-
     }
 
 
@@ -68,6 +69,15 @@ public class CustomerResource extends AuditModel {
 
     public CustomerResource setEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public CustomerResource setPassword(String password) {
+        this.password = password;
         return this;
     }
 }

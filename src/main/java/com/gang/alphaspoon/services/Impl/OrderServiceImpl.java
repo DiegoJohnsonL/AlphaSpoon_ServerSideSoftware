@@ -1,10 +1,12 @@
 package com.gang.alphaspoon.services.Impl;
 
+import com.gang.alphaspoon.entity.Customer;
 import com.gang.alphaspoon.exceptions.GeneralServiceException;
 import com.gang.alphaspoon.exceptions.NoDataFoundException;
 import com.gang.alphaspoon.exceptions.ValidateServiceException;
 import com.gang.alphaspoon.entity.Order;
 import com.gang.alphaspoon.entity.OrderLine;
+import com.gang.alphaspoon.repository.CustomerRepository;
 import com.gang.alphaspoon.repository.OrderLineRepository;
 import com.gang.alphaspoon.repository.OrderRepository;
 import com.gang.alphaspoon.services.OrderService;
@@ -32,12 +34,14 @@ public class OrderServiceImpl implements OrderService{
     private ProductRepository productRepository;
     @Autowired
     private OrderLineRepository orderLineRepository;
+    @Autowired
+    private CustomerRepository customerRepository;
 
 
     @Override
-    public Page<Order> getAllOrders(Pageable pageable) {
+    public Page<Order> getAllOrdersByCustomerId(Long customerId, Pageable pageable) {
         try {
-            return orderRepository.findAll(pageable);
+            return orderRepository.findAllByCustomerId(customerId, pageable);
         } catch (ValidateServiceException | NoDataFoundException e) {
             log.info(e.getMessage(), e);
             throw e;
@@ -47,15 +51,10 @@ public class OrderServiceImpl implements OrderService{
         }
     }
 
-    @Override //Todo
-    public Page<Order> getAllOrdersByCustomerId(Long customerId, Pageable pageable) {
-        return null;
-    }
-
     @Override
-    public Order getOrderById(Long orderId) {
+    public Order getOrderByIdAndCustomerId(Long customerId, Long orderId) {
         try {
-            return orderRepository.findById(orderId)
+            return orderRepository.findByIdAndCustomerId(orderId, customerId)
                     .orElseThrow(() -> new NoDataFoundException("La orden no existe"));
         } catch (ValidateServiceException | NoDataFoundException e) {
             log.info(e.getMessage(), e);
@@ -66,16 +65,13 @@ public class OrderServiceImpl implements OrderService{
         }
     }
 
-    @Override //Todo
-    public Order getOrderByIdAndCustomerId(Long orderId, Long customerId) {
-        return null;
-    }
-
     @Override
     @Transactional
-    public Order createOrder(Order order) {
+    public Order createOrder(Long customerId, Order order) {
         try {
             OrderValidator.save(order);
+
+            Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new NoDataFoundException("EL usuario no existe"));
 
             double total = 0;
             for(OrderLine line : order.getLines()) {
@@ -91,6 +87,7 @@ public class OrderServiceImpl implements OrderService{
             //Create Order
             if(order.getId() == null) {
                 order.setRegDate(LocalDateTime.now());
+                //order.setCustomer(customer);
                 return orderRepository.save(order);
             }
             //Update Order
@@ -114,13 +111,12 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public ResponseEntity<?> deleteOrder(Long orderId) {
+    public ResponseEntity<?> deleteOrder(Long customerId, Long orderId) {
         try {
-            Order order = orderRepository.findById(orderId)
-                    .orElseThrow(() -> new NoDataFoundException("La orden no existe"));
-
-            orderRepository.delete(order);
-            return ResponseEntity.ok().build();
+            return orderRepository.findByIdAndCustomerId(orderId, customerId).map(order -> {
+                orderRepository.delete(order);
+                return ResponseEntity.ok().build();
+            }).orElseThrow(() -> new NoDataFoundException("Order not found with Id " + orderId + " and CustomerId " + customerId));
 
         } catch (ValidateServiceException | NoDataFoundException e) {
             log.info(e.getMessage(), e);

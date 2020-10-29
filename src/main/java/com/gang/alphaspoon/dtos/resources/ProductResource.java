@@ -35,4 +35,5 @@ public class ProductResource extends AuditModel {
         this.price = price;
         return this;
     }
+
 }
