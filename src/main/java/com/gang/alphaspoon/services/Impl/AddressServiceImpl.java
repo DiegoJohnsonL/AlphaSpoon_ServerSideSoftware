@@ -57,8 +57,8 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public ResponseEntity<?> deleteAddress(Long addressId) {
-        return addressRepository.findById(addressId).map(product -> {
-            addressRepository.delete(product);
+        return addressRepository.findById(addressId).map(address -> {
+            addressRepository.delete(address);
             return ResponseEntity.ok().build();
         }).orElseThrow(()->new NoDataFoundException("addres with"+ addressId + "not found"  ));
     }

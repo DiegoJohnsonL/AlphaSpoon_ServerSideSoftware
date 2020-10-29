@@ -6,6 +6,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,49 +16,50 @@ public class Address extends AuditModel{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Length(min=5, message= "El texto debe contener mínimo 3 caracteres")
+    @NotNull
     private String tDir;
 
-    @Column(name="fecha principal", nullable = false, updatable = false)
-    private LocalDateTime fPrincipal;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
-    private Customer customer;
+    private Restaurant customer;
 
-    public Address(Long id, @Length(min = 5, message = "El texto debe contener mínimo 3 caracteres") String tDir, LocalDateTime fPrincipal, Customer customer) {
-        this.id = id;
-        this.tDir = tDir;
-        this.fPrincipal = fPrincipal;
-        this.customer = customer;
-    }
 
     public Address() {
+    }
+
+    public Address(Long id, @NotNull String tDir, Restaurant customer) {
+        this.id = id;
+        this.tDir = tDir;
+        this.customer = customer;
     }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public Address setId(Long id) {
         this.id = id;
+        return this;
     }
 
-    public LocalDateTime getfPrincipal() {
-        return fPrincipal;
+    public String gettDir() {
+        return tDir;
     }
 
-    public void setfPrincipal(LocalDateTime fPrincipal) {
-        this.fPrincipal = fPrincipal;
+    public Address settDir(String tDir) {
+        this.tDir = tDir;
+        return this;
     }
 
-    public Customer getCustomer() {
+    public Restaurant getCustomer() {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public Address setCustomer(Restaurant customer) {
         this.customer = customer;
+        return this;
     }
 }
