@@ -1,5 +1,7 @@
 package com.gang.alphaspoon.services;
 
+import com.gang.alphaspoon.dtos.requests.LoginRequest;
+import com.gang.alphaspoon.dtos.resources.LoginResource;
 import com.gang.alphaspoon.entity.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,4 +14,5 @@ public interface CustomerService {
     Customer getCustomerById(Long customerId);
     Customer updateCustomer(Long customerId, Customer customer);
     ResponseEntity<?> deleteCustomer(Long customerId);
+    LoginResource login(LoginRequest request);
 }

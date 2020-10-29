@@ -1,5 +1,7 @@
 package com.gang.alphaspoon.controllers;
 import com.gang.alphaspoon.converters.CustomerConverter;
+import com.gang.alphaspoon.dtos.requests.LoginRequest;
+import com.gang.alphaspoon.dtos.resources.LoginResource;
 import com.gang.alphaspoon.entity.Customer;
 import com.gang.alphaspoon.services.CustomerService;
 import com.gang.alphaspoon.dtos.requests.CustomerRequest;
@@ -57,6 +59,12 @@ public class CustomerController {
     public ResponseEntity<WrapperResponse<CustomerResource>> signup(@RequestBody SignupRequest request){
         Customer customer = customerService.createCustomer(customerConverter.signup(request));
         return new WrapperResponse<>( true , "success", customerConverter.fromEntity(customer)).createResponse();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<WrapperResponse<LoginResource>> login(@RequestBody LoginRequest request){
+        LoginResource response = customerService.login(request);
+        return new WrapperResponse<>( true , "success", response).createResponse();
     }
 
     @PutMapping("/{customerId}")
