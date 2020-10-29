@@ -1,6 +1,6 @@
 package com.gang.alphaspoon.validators;
 
-import com.gang.alphaspoon.domain.entity.Customer;
+import com.gang.alphaspoon.entity.Customer;
 import com.gang.alphaspoon.exceptions.ValidateServiceException;
 
 public class CustomerValidator {

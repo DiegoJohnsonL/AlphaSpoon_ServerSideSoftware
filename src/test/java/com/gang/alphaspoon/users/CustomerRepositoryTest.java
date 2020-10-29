@@ -1,7 +1,7 @@
 /*package com.gang.alphaspoon.users;
 
-import com.gang.alphaspoon.domain.entity.Customer;
-import com.gang.alphaspoon.domain.repository.CustomerRepository;
+import com.gang.alphaspoon.entity.Customer;
+import com.gang.alphaspoon.repository.CustomerRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

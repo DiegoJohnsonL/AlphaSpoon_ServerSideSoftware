@@ -1,4 +1,4 @@
-package com.gang.alphaspoon.domain.entity;
+package com.gang.alphaspoon.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -20,17 +20,18 @@ public class Administrator extends AuditModel {
     @NotNull
     private String password;
     @NotNull
-    private int dni;
+    @Column(unique = true)
+    private Integer dni;
     @NotNull
-    private int phoneNumber;
-    @NotNull
+    private Integer phoneNumber;
     @Email
+    @Column(unique = true)
     private String email;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "restaurant_id", nullable = false) // cual va a ser la columna que hara de foreing key en la tabla de comment
+    @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore // en caso se creo un archivo JSON, no agregar la columna post
+    @JsonIgnore
     private Restaurant restaurant;
 
     public Administrator() {
@@ -44,6 +45,7 @@ public class Administrator extends AuditModel {
         this.phoneNumber = phoneNumber;
         this.email = email;
     }
+
 
     public Long getId() {
         return id;
@@ -72,20 +74,20 @@ public class Administrator extends AuditModel {
         return this;
     }
 
-    public int getDni() {
+    public Integer getDni() {
         return dni;
     }
 
-    public Administrator setDni(int dni) {
+    public Administrator setDni(Integer dni) {
         this.dni = dni;
         return this;
     }
 
-    public int getPhoneNumber() {
+    public Integer getPhoneNumber() {
         return phoneNumber;
     }
 
-    public Administrator setPhoneNumber(int phoneNumber) {
+    public Administrator setPhoneNumber(Integer phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }

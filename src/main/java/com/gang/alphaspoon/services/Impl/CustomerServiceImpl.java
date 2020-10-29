@@ -1,11 +1,9 @@
-package com.gang.alphaspoon.services;
+package com.gang.alphaspoon.services.Impl;
 
+import com.gang.alphaspoon.entity.Customer;
 import com.gang.alphaspoon.exceptions.GeneralServiceException;
 import com.gang.alphaspoon.exceptions.NoDataFoundException;
-import com.gang.alphaspoon.exceptions.ResourceNotFoundException;
-import com.gang.alphaspoon.domain.entity.Customer;
-import com.gang.alphaspoon.domain.repository.CustomerRepository;
-import com.gang.alphaspoon.domain.service.CustomerService;
+import com.gang.alphaspoon.services.CustomerService;
 import com.gang.alphaspoon.exceptions.ValidateServiceException;
 import com.gang.alphaspoon.validators.CustomerValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import com.gang.alphaspoon.repository.CustomerRepository;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -31,14 +28,13 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer getCustomerByEmail(String email) {
         return customerRepository.findByEmail(email)
-                .orElseThrow(()->new ResourceNotFoundException("User with"+
-                        email + "not found"));
+                .orElseThrow(()->new NoDataFoundException("User with"+       email + "not found"));
     }
 
     @Override
     public Customer getCustomerById(Long customerId) {
         return customerRepository.findById(customerId)
-                .orElseThrow(()->new ResourceNotFoundException("Customer", "Id", customerId));
+                .orElseThrow(()->new NoDataFoundException("Customer", "Id", customerId));
     }
 
     @Override
@@ -67,7 +63,7 @@ public class CustomerServiceImpl implements CustomerService {
             customer.setEmail(customerRequest.getEmail());
             customer.setPhoneNumber(customerRequest.getPhoneNumber());
             return customerRepository.save(customer);
-        }).orElseThrow(()->new ResourceNotFoundException("Customer", "Id", customerId));
+        }).orElseThrow(()->new NoDataFoundException("Customer", "Id", customerId));
     }
 
     @Override
@@ -75,6 +71,6 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.findById(customerId).map(customer -> {
             customerRepository.delete(customer);
             return ResponseEntity.ok().build();
-        }).orElseThrow(()->new ResourceNotFoundException("Customer", "Id", customerId));
+        }).orElseThrow(()->new NoDataFoundException("Customer", "Id", customerId));
     }
 }

@@ -1,7 +1,7 @@
 package com.gang.alphaspoon.controllers;
 
-import com.gang.alphaspoon.domain.entity.Order;
-import com.gang.alphaspoon.domain.service.OrderService;
+import com.gang.alphaspoon.entity.Order;
+import com.gang.alphaspoon.services.OrderService;
 import com.gang.alphaspoon.dtos.resources.OrderResource;
 import com.gang.alphaspoon.dtos.requests.OrderRequest;
 import org.modelmapper.ModelMapper;

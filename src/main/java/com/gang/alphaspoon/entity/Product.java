@@ -1,4 +1,4 @@
-package com.gang.alphaspoon.domain.entity;
+package com.gang.alphaspoon.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.OnDelete;
@@ -22,9 +22,9 @@ public class Product extends AuditModel {
     private Double price;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "restaurant_id", nullable = false) // cual va a ser la columna que hara de foreing key en la tabla de comment
+    @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore // en caso se creo un archivo JSON, no agregar la columna post
+    @JsonIgnore
     private Restaurant restaurant;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

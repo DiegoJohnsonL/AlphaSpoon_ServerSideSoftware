@@ -1,9 +1,10 @@
 package com.gang.alphaspoon.controllers;
 
-import com.gang.alphaspoon.domain.entity.Restaurant;
-import com.gang.alphaspoon.domain.service.RestaurantService;
+import com.gang.alphaspoon.entity.Restaurant;
+import com.gang.alphaspoon.services.RestaurantService;
 import com.gang.alphaspoon.dtos.requests.RestaurantRequest;
 import com.gang.alphaspoon.dtos.resources.RestaurantResource;
+import com.gang.alphaspoon.utils.WrapperResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,45 +23,55 @@ public class RestaurantController {
 
     @Autowired
     private RestaurantService restaurantService;
+
     @Autowired
     private ModelMapper mapper;
 
 
     @GetMapping
-    public Page<RestaurantResource> getAllRestaurants(Pageable pageable){
-        //Todo: Test this implementation of get all
-        //return restaurantService.getAllRestaurants(pageable).map(this::convertToResource);
-        //If it doesn't work use this
+    public ResponseEntity<WrapperResponse<Page<RestaurantResource>>> getAllRestaurants(Pageable pageable){
         List<RestaurantResource> resources = restaurantService.getAllRestaurants(pageable).getContent()
                 .stream().map(this::convertToResource).collect(Collectors.toList());
-        return new PageImpl<>(resources, pageable, resources.size());
+        Page<RestaurantResource> page = new PageImpl<>(resources, pageable, resources.size());
+
+        return new WrapperResponse<>(true, "success", page).createResponse();
     }
+
     @GetMapping("/{restaurantId}")
-    public RestaurantResource getRestaurantById(@PathVariable(name = "restaurantId") Long restaurantId){
-        return convertToResource(restaurantService.getRestaurantById(restaurantId));
+    public ResponseEntity<WrapperResponse<RestaurantResource>> getRestaurantById(@PathVariable(name = "restaurantId") Long restaurantId){
+        return new WrapperResponse<>(true, "success",
+                convertToResource(restaurantService.getRestaurantById(restaurantId))).createResponse();
     }
-    @GetMapping("/{restaurantEmail:.+}")
-    public RestaurantResource getRestaurantByEmail(@PathVariable(name = "restaurantEmail") String restaurant){
-        return convertToResource(restaurantService.getRestaurantByEmail(restaurant));
+
+    @GetMapping("/email/{restaurantEmail:.+}")
+    public  ResponseEntity<WrapperResponse<RestaurantResource>> getRestaurantByEmail(@PathVariable(name = "restaurantEmail") String restaurant){
+        return new WrapperResponse<>(true, "success",
+                convertToResource(restaurantService.getRestaurantByEmail(restaurant))).createResponse();
     }
+
     @PostMapping
-    public RestaurantResource createRestaurant(
+    public ResponseEntity<WrapperResponse<RestaurantResource>> createRestaurant(
             @Valid @RequestBody RestaurantRequest restaurantResource){
-        return convertToResource(restaurantService
-                .create(convertToEntity(restaurantResource)));
+        return new WrapperResponse<>(true, "success",
+                convertToResource(restaurantService.createRestaurant(convertToEntity(restaurantResource)))).createResponse();
     }
+
     @PutMapping("/{restaurantId}")
-    public  RestaurantResource updateRestaurant(
+    public  ResponseEntity<WrapperResponse<RestaurantResource>> updateRestaurant(
             @PathVariable(name = "restaurantId") Long restaurantId,
             @Valid @RequestBody RestaurantRequest restaurantResource){
-        return convertToResource(restaurantService.updateRestaurant(restaurantId, convertToEntity(restaurantResource)));
+        return new WrapperResponse<>(true, "success",
+                convertToResource(restaurantService.updateRestaurant(restaurantId, convertToEntity(restaurantResource)))).createResponse();
+
     }
 
     @DeleteMapping("{restaurantId}")
     public ResponseEntity<?> deleteRestaurant(
             @PathVariable(name = "restaurantId") Long restaurantId){
-        return restaurantService.deleteRestaurant(restaurantId);
+        restaurantService.deleteRestaurant(restaurantId);
+        return new WrapperResponse<>(true, "success", null).createResponse();
     }
+
     private Restaurant convertToEntity(@Valid RestaurantRequest resource){return mapper.map(resource,Restaurant.class);}
     private RestaurantResource convertToResource(Restaurant entity){return mapper.map(entity, RestaurantResource.class);}
 }

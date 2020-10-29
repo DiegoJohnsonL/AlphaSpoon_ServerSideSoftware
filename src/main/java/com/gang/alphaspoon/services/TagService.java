@@ -1,6 +1,6 @@
-package com.gang.alphaspoon.domain.service;
+package com.gang.alphaspoon.services;
 
-import com.gang.alphaspoon.domain.entity.Tag;
+import com.gang.alphaspoon.entity.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;

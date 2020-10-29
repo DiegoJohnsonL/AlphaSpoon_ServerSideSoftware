@@ -1,7 +1,7 @@
 package com.gang.alphaspoon.controllers;
 import com.gang.alphaspoon.converters.CustomerConverter;
-import com.gang.alphaspoon.domain.entity.Customer;
-import com.gang.alphaspoon.domain.service.CustomerService;
+import com.gang.alphaspoon.entity.Customer;
+import com.gang.alphaspoon.services.CustomerService;
 import com.gang.alphaspoon.dtos.requests.CustomerRequest;
 import com.gang.alphaspoon.dtos.requests.SignupRequest;
 import com.gang.alphaspoon.dtos.resources.CustomerResource;

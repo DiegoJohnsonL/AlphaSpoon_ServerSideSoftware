@@ -1,7 +1,7 @@
 package com.gang.alphaspoon.dtos.resources;
 
 
-import com.gang.alphaspoon.domain.entity.AuditModel;
+import com.gang.alphaspoon.entity.AuditModel;
 
 public class ProductResource extends AuditModel {
 

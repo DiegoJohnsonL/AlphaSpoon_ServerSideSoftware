@@ -1,4 +1,4 @@
-package com.gang.alphaspoon.domain.entity;
+package com.gang.alphaspoon.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;

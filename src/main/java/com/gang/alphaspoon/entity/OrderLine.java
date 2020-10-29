@@ -1,4 +1,4 @@
-package com.gang.alphaspoon.domain.entity;
+package com.gang.alphaspoon.entity;
 
 import javax.persistence.*;
 

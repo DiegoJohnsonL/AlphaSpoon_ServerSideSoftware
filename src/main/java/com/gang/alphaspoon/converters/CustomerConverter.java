@@ -1,6 +1,6 @@
 package com.gang.alphaspoon.converters;
 
-import com.gang.alphaspoon.domain.entity.Customer;
+import com.gang.alphaspoon.entity.Customer;
 import com.gang.alphaspoon.dtos.requests.SignupRequest;
 import com.gang.alphaspoon.dtos.resources.CustomerResource;
 

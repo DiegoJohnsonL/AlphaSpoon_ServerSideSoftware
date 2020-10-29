@@ -1,11 +1,12 @@
 package com.gang.alphaspoon.dtos.resources;
 
-import com.gang.alphaspoon.domain.entity.AuditModel;
+import com.gang.alphaspoon.entity.AuditModel;
 
 public class RestaurantResource extends AuditModel {
+
     private Long id;
     private String name;
-    private int phoneNumber;
+    private Integer phoneNumber;
     private String email;
 
 
@@ -27,11 +28,11 @@ public class RestaurantResource extends AuditModel {
         return this;
     }
 
-    public int getPhoneNumber() {
+    public Integer getPhoneNumber() {
         return phoneNumber;
     }
 
-    public RestaurantResource setPhoneNumber(int phoneNumber) {
+    public RestaurantResource setPhoneNumber(Integer phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }

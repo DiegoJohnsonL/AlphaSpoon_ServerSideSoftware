@@ -1,6 +1,6 @@
 package com.gang.alphaspoon.dtos.resources;
 
-import com.gang.alphaspoon.domain.entity.AuditModel;
+import com.gang.alphaspoon.entity.AuditModel;
 import lombok.Builder;
 
 import java.util.Date;
@@ -22,6 +22,7 @@ public class CustomerResource extends AuditModel {
     }
 
     public CustomerResource() {
+
     }
 
 
