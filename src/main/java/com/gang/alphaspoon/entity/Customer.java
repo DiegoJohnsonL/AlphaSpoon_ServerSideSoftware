@@ -19,7 +19,7 @@ public class Customer extends AuditModel {
     @NotNull
     private String name;
     @NotNull
-    @Size (max = 150)
+    @Size (min =3, max = 150)
     private String password;
     @NotNull
     @Temporal(TemporalType.DATE) //Todo: Change to LocalDateTime Type of variable
