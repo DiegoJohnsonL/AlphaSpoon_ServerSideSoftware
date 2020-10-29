@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 @Slf4j
 @Service
 public class AdministratorServiceImpl implements AdministratorService{
@@ -81,7 +83,7 @@ public class AdministratorServiceImpl implements AdministratorService{
         }
 
     }
-
+    @Transactional
     @Override
     public Administrator createAdministrator(Long restaurantId, Administrator administrator) {
         try{
@@ -100,7 +102,7 @@ public class AdministratorServiceImpl implements AdministratorService{
 
     }
 
-
+    @Transactional
     @Override
     public Administrator updateAdministrator(Long restaurantId, Long administratorId, Administrator administratorRequest) {
         try{
@@ -125,7 +127,7 @@ public class AdministratorServiceImpl implements AdministratorService{
         }
 
     }
-
+    @Transactional
     @Override
     public ResponseEntity<?> deleteAdministrator(Long restaurantId, Long administratorId) {
         try{

@@ -2,6 +2,7 @@ package com.gang.alphaspoon.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "orders")
+@Builder
 public class Order extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,11 +27,10 @@ public class Order extends AuditModel {
     @Column(name="total", nullable = false)
     private Double total;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "restaurant_id", nullable = false) // cual va a ser la columna que hara de foreing key en la tabla de comment
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonIgnore // en caso se creo un archivo JSON, no agregar la columna post
-    private Customer customer;
+    //@ManyToOne(optional = false)
+    //@JoinColumn(name = "customer_id", nullable = false)
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    //private Customer customer;
 
     public Long getId() {
         return id;
@@ -64,15 +65,6 @@ public class Order extends AuditModel {
 
     public Order setTotal(Double total) {
         this.total = total;
-        return this;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public Order setCustomer(Customer customer) {
-        this.customer = customer;
         return this;
     }
 }

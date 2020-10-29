@@ -1,6 +1,7 @@
 package com.gang.alphaspoon.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Builder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "products")
+@Builder
 public class Product extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +34,18 @@ public class Product extends AuditModel {
     @JsonIgnore
     private List<Tag> tags;
 
+    public Product() {
+    }
+
+    public Product(Long id, String name, @NotNull Double price, Restaurant restaurant, List<Tag> tags) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.restaurant = restaurant;
+        this.tags = tags;
+    }
+
+
     public boolean isTaggedWith(Tag tag){       // Business methods
         return (this.getTags().contains(tag));
     }
@@ -47,15 +61,6 @@ public class Product extends AuditModel {
             this.getTags().remove(tag);
         }
         return this;
-    }
-
-    public Product(Long id, String name, Double price) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-    }
-
-    public Product() {
     }
 
     public Long getId() {

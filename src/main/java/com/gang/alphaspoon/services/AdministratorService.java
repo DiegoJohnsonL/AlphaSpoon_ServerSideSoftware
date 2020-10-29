@@ -9,6 +9,7 @@ public interface AdministratorService {
     Page<Administrator> getAllAdministratorsByRestaurantId(Long restaurantId, Pageable pageable);
     Administrator getAdministratorByEmail(String email);
     Administrator getAdministratorByDni(Integer dni);
+
     Administrator getAdministratorByIdAndRestaurantId(Long administratorId, Long restaurantId);
     Administrator createAdministrator(Long restaurantId, Administrator administrator);
     Administrator updateAdministrator(Long restaurantId, Long administratorId, Administrator administrator);
