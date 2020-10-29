@@ -1,5 +1,6 @@
-package com.gang.alphaspoon.domain.repository;
-import com.gang.alphaspoon.domain.entity.Customer;
+package com.gang.alphaspoon.repository;
+
+import com.gang.alphaspoon.entity.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

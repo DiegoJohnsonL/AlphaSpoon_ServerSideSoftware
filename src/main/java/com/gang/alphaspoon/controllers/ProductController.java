@@ -1,8 +1,8 @@
 package com.gang.alphaspoon.controllers;
 
 
-import com.gang.alphaspoon.domain.entity.Product;
-import com.gang.alphaspoon.domain.service.ProductService;
+import com.gang.alphaspoon.entity.Product;
+import com.gang.alphaspoon.services.ProductService;
 import com.gang.alphaspoon.dtos.requests.ProductRequest;
 import com.gang.alphaspoon.dtos.resources.ProductResource;
 import org.modelmapper.ModelMapper;

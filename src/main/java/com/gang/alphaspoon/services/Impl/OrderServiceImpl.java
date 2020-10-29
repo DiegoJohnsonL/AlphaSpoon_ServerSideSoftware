@@ -1,16 +1,16 @@
-package com.gang.alphaspoon.services;
+package com.gang.alphaspoon.services.Impl;
 
 import com.gang.alphaspoon.exceptions.GeneralServiceException;
-import com.gang.alphaspoon.exceptions.ResourceNotFoundException;
+import com.gang.alphaspoon.exceptions.NoDataFoundException;
 import com.gang.alphaspoon.exceptions.ValidateServiceException;
-import com.gang.alphaspoon.domain.entity.Order;
-import com.gang.alphaspoon.domain.entity.OrderLine;
-import com.gang.alphaspoon.domain.repository.OrderLineRepository;
-import com.gang.alphaspoon.domain.repository.OrderRepository;
-import com.gang.alphaspoon.domain.service.OrderService;
+import com.gang.alphaspoon.entity.Order;
+import com.gang.alphaspoon.entity.OrderLine;
+import com.gang.alphaspoon.repository.OrderLineRepository;
+import com.gang.alphaspoon.repository.OrderRepository;
+import com.gang.alphaspoon.services.OrderService;
 import com.gang.alphaspoon.validators.OrderValidator;
-import com.gang.alphaspoon.domain.entity.Product;
-import com.gang.alphaspoon.domain.repository.ProductRepository;
+import com.gang.alphaspoon.entity.Product;
+import com.gang.alphaspoon.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -38,7 +38,7 @@ public class OrderServiceImpl implements OrderService{
     public Page<Order> getAllOrders(Pageable pageable) {
         try {
             return orderRepository.findAll(pageable);
-        } catch (ValidateServiceException | ResourceNotFoundException e) {
+        } catch (ValidateServiceException | NoDataFoundException e) {
             log.info(e.getMessage(), e);
             throw e;
         } catch (Exception e) {
@@ -56,8 +56,8 @@ public class OrderServiceImpl implements OrderService{
     public Order getOrderById(Long orderId) {
         try {
             return orderRepository.findById(orderId)
-                    .orElseThrow(() -> new ResourceNotFoundException("La orden no existe"));
-        } catch (ValidateServiceException | ResourceNotFoundException e) {
+                    .orElseThrow(() -> new NoDataFoundException("La orden no existe"));
+        } catch (ValidateServiceException | NoDataFoundException e) {
             log.info(e.getMessage(), e);
             throw e;
         } catch (Exception e) {
@@ -80,7 +80,7 @@ public class OrderServiceImpl implements OrderService{
             double total = 0;
             for(OrderLine line : order.getLines()) {
                 Product product = productRepository.findById(line.getProduct().getId())
-                        .orElseThrow(() -> new ResourceNotFoundException("No existe el producto " + line.getProduct().getId()));
+                        .orElseThrow(() -> new NoDataFoundException("No existe el producto " + line.getProduct().getId()));
                 line.setPrice(product.getPrice());
                 line.setTotal(product.getPrice() * line.getQuantity());
                 total += line.getTotal();
@@ -95,7 +95,7 @@ public class OrderServiceImpl implements OrderService{
             }
             //Update Order
             Order savedOrder = orderRepository.findById(order.getId())
-                    .orElseThrow(() -> new ResourceNotFoundException("La orden no existe"));
+                    .orElseThrow(() -> new NoDataFoundException("La orden no existe"));
             //RegDate no se cambia, se mantiene la de creacion
             order.setRegDate(savedOrder.getRegDate());
 
@@ -104,7 +104,7 @@ public class OrderServiceImpl implements OrderService{
             orderLineRepository.deleteAll(deletedLines);
 
             return orderRepository.save(order);
-        } catch (ValidateServiceException | ResourceNotFoundException e) {
+        } catch (ValidateServiceException | NoDataFoundException e) {
             log.info(e.getMessage(), e);
             throw e;
         } catch (Exception e) {
@@ -117,12 +117,12 @@ public class OrderServiceImpl implements OrderService{
     public ResponseEntity<?> deleteOrder(Long orderId) {
         try {
             Order order = orderRepository.findById(orderId)
-                    .orElseThrow(() -> new ResourceNotFoundException("La orden no existe"));
+                    .orElseThrow(() -> new NoDataFoundException("La orden no existe"));
 
             orderRepository.delete(order);
             return ResponseEntity.ok().build();
 
-        } catch (ValidateServiceException | ResourceNotFoundException e) {
+        } catch (ValidateServiceException | NoDataFoundException e) {
             log.info(e.getMessage(), e);
             throw e;
         } catch (Exception e) {

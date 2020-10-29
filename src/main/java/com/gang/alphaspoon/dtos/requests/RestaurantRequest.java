@@ -6,12 +6,13 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 
 public class RestaurantRequest {
-
     @NotNull(message = "Missing Restaurant name")
     @Length(min = 3, message = "Name needs to have between 3 to 50 characters")
     private String name;
+
     @NotNull
-    private int phoneNumber;
+    private Integer phoneNumber;
+
     @Email(message = "Email not valid")
     private String email;
 
@@ -24,11 +25,11 @@ public class RestaurantRequest {
         return this;
     }
 
-    public int getPhoneNumber() {
+    public Integer getPhoneNumber() {
         return phoneNumber;
     }
 
-    public RestaurantRequest setPhoneNumber(int phoneNumber) {
+    public RestaurantRequest setPhoneNumber(Integer phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }

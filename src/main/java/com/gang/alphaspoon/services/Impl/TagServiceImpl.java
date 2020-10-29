@@ -1,10 +1,10 @@
-package com.gang.alphaspoon.services;
+package com.gang.alphaspoon.services.Impl;
 
-import com.gang.alphaspoon.exceptions.ResourceNotFoundException;
-import com.gang.alphaspoon.domain.entity.Tag;
-import com.gang.alphaspoon.domain.repository.ProductRepository;
-import com.gang.alphaspoon.domain.repository.TagRepository;
-import com.gang.alphaspoon.domain.service.TagService;
+import com.gang.alphaspoon.entity.Tag;
+import com.gang.alphaspoon.exceptions.NoDataFoundException;
+import com.gang.alphaspoon.repository.ProductRepository;
+import com.gang.alphaspoon.repository.TagRepository;
+import com.gang.alphaspoon.services.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,13 +32,13 @@ public class TagServiceImpl implements TagService {
         return productRepository.findById(productId).map(product->{
             List<Tag> tags = product.getTags();
             return new PageImpl<>(tags, pageable, tags.size());
-        }).orElseThrow(()-> new ResourceNotFoundException("Product"+"Id"+productId));
+        }).orElseThrow(()-> new NoDataFoundException("Product"+"Id"+productId));
     }
 
     @Override
     public Tag getTagById(Long tagId) {
         return tagRepository.findById(tagId)
-                .orElseThrow(() -> new ResourceNotFoundException(
+                .orElseThrow(() -> new NoDataFoundException(
                         "Tag", "Id", tagId));
     }
 
@@ -52,7 +52,7 @@ public class TagServiceImpl implements TagService {
         return tagRepository.findById(tagId).map(tag -> {
             tag.setName(tagDetails.getName());
             return tagRepository.save(tag);
-        }).orElseThrow(() -> new ResourceNotFoundException(
+        }).orElseThrow(() -> new NoDataFoundException(
                 "Tag", "Id", tagId));
     }
 
@@ -61,7 +61,7 @@ public class TagServiceImpl implements TagService {
         return tagRepository.findById(tagId).map(tag -> {
             tagRepository.delete(tag);
             return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new ResourceNotFoundException(
+        }).orElseThrow(() -> new NoDataFoundException(
                 "Tag", "Id", tagId));
     }
 }

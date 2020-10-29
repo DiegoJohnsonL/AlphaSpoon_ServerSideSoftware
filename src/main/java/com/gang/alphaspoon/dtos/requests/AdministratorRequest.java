@@ -3,8 +3,10 @@ package com.gang.alphaspoon.dtos.requests;
 import org.hibernate.validator.constraints.Length;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class AdministratorRequest {
+
     @NotNull(message = "Missing customer name")
     @Length(min = 3, message = "Name needs to have between 3 to 50 characters")
     private String name;
@@ -13,12 +15,11 @@ public class AdministratorRequest {
     @Length(min = 6, max = 16, message = "Password needs to have between 3 to 50 characters")
     private String password;
 
-    @NotNull(message = "Missing password")
-    @Length(min = 8, max = 8, message = "DNI needs to have 8 digits")
-    private int dni;
+    @Size(min = 8, max = 8, message = "DNI needs to have 8 digits")
+    private Integer dni;
 
     @NotNull
-    private int phoneNumber;
+    private Integer phoneNumber;
 
     @Email(message = "Email not valid")
     private String email;

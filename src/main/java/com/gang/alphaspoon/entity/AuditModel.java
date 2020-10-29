@@ -1,4 +1,4 @@
-package com.gang.alphaspoon.domain.entity;
+package com.gang.alphaspoon.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -11,8 +11,7 @@ import java.util.Date;
 
 @MappedSuperclass //define como super class
 @EntityListeners(AuditingEntityListener.class)  // estos atributos usan los entity listeners
-@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)  //Al ingresar data(POST) no se envia estros atributos
-//En caso que  se use GET se puede mostrar la informacion de estos atributos
+@JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 public abstract class AuditModel {
 
     @Temporal(TemporalType.TIMESTAMP) // Formato Fecha-hora

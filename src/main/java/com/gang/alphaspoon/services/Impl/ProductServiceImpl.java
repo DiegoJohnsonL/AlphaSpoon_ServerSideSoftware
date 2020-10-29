@@ -1,11 +1,11 @@
-package com.gang.alphaspoon.services;
+package com.gang.alphaspoon.services.Impl;
 
-import com.gang.alphaspoon.exceptions.ResourceNotFoundException;
-import com.gang.alphaspoon.domain.entity.Product;
-import com.gang.alphaspoon.domain.entity.Tag;
-import com.gang.alphaspoon.domain.repository.ProductRepository;
-import com.gang.alphaspoon.domain.repository.TagRepository;
-import com.gang.alphaspoon.domain.service.ProductService;
+import com.gang.alphaspoon.entity.Product;
+import com.gang.alphaspoon.entity.Tag;
+import com.gang.alphaspoon.exceptions.NoDataFoundException;
+import com.gang.alphaspoon.repository.ProductRepository;
+import com.gang.alphaspoon.repository.TagRepository;
+import com.gang.alphaspoon.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -32,7 +32,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductById(Long productId) {
         return productRepository.findById(productId)
-                .orElseThrow(()->new ResourceNotFoundException("Product with"+ productId + "not found"  ));
+                .orElseThrow(()->new NoDataFoundException("Product with"+ productId + "not found"  ));
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
             product.setName(productRequest.getName());
             product.setPrice(productRequest.getPrice());
             return productRepository.save(product);
-        }).orElseThrow(()->new ResourceNotFoundException("Product with"+ productId + "not found"  ));
+        }).orElseThrow(()->new NoDataFoundException("Product with"+ productId + "not found"  ));
     }
 
     @Override
@@ -55,26 +55,26 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findById(productId).map(product -> {
             productRepository.delete(product);
             return ResponseEntity.ok().build();
-        }).orElseThrow(()->new ResourceNotFoundException("Product with"+ productId + "not found"  ));
+        }).orElseThrow(()->new NoDataFoundException("Product with"+ productId + "not found"  ));
     }
 
     @Override
     public Product assignProductTag(Long productId, Long tagId) {
-        Tag tag = tagRepository.findById(tagId).orElseThrow(()-> new ResourceNotFoundException("Tag", "Id", tagId));
+        Tag tag = tagRepository.findById(tagId).orElseThrow(()-> new NoDataFoundException("Tag", "Id", tagId));
         return productRepository.findById(productId).map(product -> {
             return productRepository.save(product.tagWith(tag));
-        }).orElseThrow(() -> new ResourceNotFoundException(
+        }).orElseThrow(() -> new NoDataFoundException(
                 "Product", "Id", productId));
     }
 
     @Override
     public Product unassignProductTag(Long productId, Long tagId) {
         Tag tag = tagRepository.findById(tagId)
-                .orElseThrow(() -> new ResourceNotFoundException(
+                .orElseThrow(() -> new NoDataFoundException(
                         "Tag", "Id", tagId));
         return productRepository.findById(productId).map(product -> {
             return productRepository.save(product.unTagWith(tag));
-        }).orElseThrow(() -> new ResourceNotFoundException(
+        }).orElseThrow(() -> new NoDataFoundException(
                 "product", "Id", productId));
     }
 
@@ -83,7 +83,7 @@ public class ProductServiceImpl implements ProductService {
         return tagRepository.findById(tagId).map( tag -> {
             List<Product> products = tag.getProducts();
             return new PageImpl<>(products, pageable, products.size());
-        }).orElseThrow(() -> new ResourceNotFoundException(
+        }).orElseThrow(() -> new NoDataFoundException(
                 "Tag", "Id", tagId));
     }
 }

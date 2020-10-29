@@ -1,4 +1,4 @@
-package com.gang.alphaspoon.domain.entity;
+package com.gang.alphaspoon.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -13,9 +13,11 @@ public class Restaurant extends AuditModel {
     @NotNull
     private String name;
     @Email
+    @Column(unique = true)
     private String email;
     @NotNull
-    private int phoneNumber;
+    private Integer phoneNumber;
+
     public Restaurant(Long id, @NotNull String name, @Email String email, @NotNull int phoneNumber) {
         Id = id;
         this.name = name;
@@ -53,11 +55,11 @@ public class Restaurant extends AuditModel {
         return this;
     }
 
-    public int getPhoneNumber() {
+    public Integer getPhoneNumber() {
         return phoneNumber;
     }
 
-    public Restaurant setPhoneNumber(int phoneNumber) {
+    public Restaurant setPhoneNumber(Integer phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }

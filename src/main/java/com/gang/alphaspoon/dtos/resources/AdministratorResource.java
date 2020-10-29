@@ -1,13 +1,15 @@
 package com.gang.alphaspoon.dtos.resources;
 
-import com.gang.alphaspoon.domain.entity.AuditModel;
+import com.gang.alphaspoon.entity.AuditModel;
 
 public class AdministratorResource extends AuditModel {
+
     private Long id;
     private String name;
-    private int dni;
-    private int phoneNumber;
+    private Integer dni;
+    private Integer phoneNumber;
     private String email;
+
 
     public Long getId() {
         return id;
@@ -27,20 +29,20 @@ public class AdministratorResource extends AuditModel {
         return this;
     }
 
-    public int getDni() {
+    public Integer getDni() {
         return dni;
     }
 
-    public AdministratorResource setDni(int dni) {
+    public AdministratorResource setDni(Integer dni) {
         this.dni = dni;
         return this;
     }
 
-    public int getPhoneNumber() {
+    public Integer getPhoneNumber() {
         return phoneNumber;
     }
 
-    public AdministratorResource setPhoneNumber(int phoneNumber) {
+    public AdministratorResource setPhoneNumber(Integer phoneNumber) {
         this.phoneNumber = phoneNumber;
         return this;
     }
