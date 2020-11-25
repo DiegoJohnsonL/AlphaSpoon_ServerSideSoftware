@@ -1,4 +1,4 @@
-package com.gang.alphaspoon.dtos.resources;
+package com.gang.alphaspoon.dtos;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginResource {
-    private CustomerResource user;
+public class LoginResponseDTO {
+    private UserDTO user;
     private String token;
 }

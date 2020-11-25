@@ -63,7 +63,7 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public Product createProduct(Long restaurantId, Product product) {
         try{
-            ProductValidator.validate(product);
+            ProductValidator.save(product);
             return restaurantRepository.findById(restaurantId).map(restaurant -> {
                 product.setRestaurant(restaurant);
                 return productRepository.save(product);
@@ -82,7 +82,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product updateProduct(Long restaurantId, Long productId, Product productRequest) {
         try{
-            ProductValidator.validate(productRequest);
+            ProductValidator.save(productRequest);
             if(!restaurantRepository.existsById(restaurantId))
                 throw new NoDataFoundException("Restaurant", "Id", restaurantId);
             return productRepository.findById(productId).map(product -> {

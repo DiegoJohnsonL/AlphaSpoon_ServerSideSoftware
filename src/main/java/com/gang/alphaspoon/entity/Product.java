@@ -1,7 +1,7 @@
 package com.gang.alphaspoon.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Builder;
+import lombok.*;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
@@ -9,9 +9,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
-@Entity
-@Table(name = "products")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
 @Builder
+@Entity
+@Table(name="products")
 public class Product extends AuditModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,18 +38,6 @@ public class Product extends AuditModel {
     @JsonIgnore
     private List<Tag> tags;
 
-    public Product() {
-    }
-
-    public Product(Long id, String name, @NotNull Double price, Restaurant restaurant, List<Tag> tags) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.restaurant = restaurant;
-        this.tags = tags;
-    }
-
-
     public boolean isTaggedWith(Tag tag){       // Business methods
         return (this.getTags().contains(tag));
     }
@@ -60,51 +52,6 @@ public class Product extends AuditModel {
         if(this.isTaggedWith(tag)) {
             this.getTags().remove(tag);
         }
-        return this;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Product setId(Long id) {
-        this.id = id;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Product setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public Product setPrice(Double price) {
-        this.price = price;
-        return this;
-    }
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public Product setTags(List<Tag> tags) {
-        this.tags = tags;
-        return this;
-    }
-
-    public Restaurant getRestaurant() {
-        return restaurant;
-    }
-
-    public Product setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
         return this;
     }
 }

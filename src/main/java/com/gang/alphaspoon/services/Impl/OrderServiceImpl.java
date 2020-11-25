@@ -1,23 +1,21 @@
 package com.gang.alphaspoon.services.Impl;
 
-import com.gang.alphaspoon.entity.Customer;
+import com.gang.alphaspoon.entity.User;
 import com.gang.alphaspoon.exceptions.GeneralServiceException;
 import com.gang.alphaspoon.exceptions.NoDataFoundException;
 import com.gang.alphaspoon.exceptions.ValidateServiceException;
 import com.gang.alphaspoon.entity.Order;
 import com.gang.alphaspoon.entity.OrderLine;
-import com.gang.alphaspoon.repository.CustomerRepository;
 import com.gang.alphaspoon.repository.OrderLineRepository;
 import com.gang.alphaspoon.repository.OrderRepository;
+import com.gang.alphaspoon.security.UserPrincipal;
 import com.gang.alphaspoon.services.OrderService;
 import com.gang.alphaspoon.validators.OrderValidator;
 import com.gang.alphaspoon.entity.Product;
 import com.gang.alphaspoon.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,19 +27,17 @@ import java.util.List;
 public class OrderServiceImpl implements OrderService{
 
     @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
-    private ProductRepository productRepository;
-    @Autowired
-    private OrderLineRepository orderLineRepository;
-    @Autowired
-    private CustomerRepository customerRepository;
+    private OrderRepository orderRepo;
 
+    @Autowired
+    private OrderLineRepository orderLineRepo;
 
-    @Override
-    public Page<Order> getAllOrdersByCustomerId(Long customerId, Pageable pageable) {
+    @Autowired
+    private ProductRepository productRepo;
+
+    public List<Order> findAll(Pageable page){
         try {
-            return orderRepository.findAllByCustomerId(customerId, pageable);
+            return orderRepo.findAll(page).toList();
         } catch (ValidateServiceException | NoDataFoundException e) {
             log.info(e.getMessage(), e);
             throw e;
@@ -51,10 +47,9 @@ public class OrderServiceImpl implements OrderService{
         }
     }
 
-    @Override
-    public Order getOrderByIdAndCustomerId(Long customerId, Long orderId) {
+    public Order findById(Long id) {
         try {
-            return orderRepository.findByIdAndCustomerId(orderId, customerId)
+            return orderRepo.findById(id)
                     .orElseThrow(() -> new NoDataFoundException("La orden no existe"));
         } catch (ValidateServiceException | NoDataFoundException e) {
             log.info(e.getMessage(), e);
@@ -65,18 +60,34 @@ public class OrderServiceImpl implements OrderService{
         }
     }
 
-    @Override
+    public void delete(Long id) {
+        try {
+            Order order = orderRepo.findById(id)
+                    .orElseThrow(() -> new NoDataFoundException("La orden no existe"));
+
+            orderRepo.delete(order);
+
+        } catch (ValidateServiceException | NoDataFoundException e) {
+            log.info(e.getMessage(), e);
+            throw e;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw new GeneralServiceException(e.getMessage(), e);
+        }
+    }
+
     @Transactional
-    public Order createOrder(Long customerId, Order order) {
+    public Order save(Order order) {
         try {
             OrderValidator.save(order);
 
-            Customer customer = customerRepository.findById(customerId).orElseThrow(() -> new NoDataFoundException("EL usuario no existe"));
+            User user= UserPrincipal.getCurrentUser();
 
             double total = 0;
             for(OrderLine line : order.getLines()) {
-                Product product = productRepository.findById(line.getProduct().getId())
+                Product product = productRepo.findById(line.getProduct().getId())
                         .orElseThrow(() -> new NoDataFoundException("No existe el producto " + line.getProduct().getId()));
+
                 line.setPrice(product.getPrice());
                 line.setTotal(product.getPrice() * line.getQuantity());
                 total += line.getTotal();
@@ -86,38 +97,22 @@ public class OrderServiceImpl implements OrderService{
 
             //Create Order
             if(order.getId() == null) {
+                order.setUser(user);
                 order.setRegDate(LocalDateTime.now());
-                //order.setCustomer(customer);
-                return orderRepository.save(order);
+                return orderRepo.save(order);
             }
+
             //Update Order
-            Order savedOrder = orderRepository.findById(order.getId())
+            Order savedOrder = orderRepo.findById(order.getId())
                     .orElseThrow(() -> new NoDataFoundException("La orden no existe"));
             //RegDate no se cambia, se mantiene la de creacion
             order.setRegDate(savedOrder.getRegDate());
 
             List<OrderLine> deletedLines = savedOrder.getLines();//Obtiene las lineas asociadas a la order obtenida
             deletedLines.removeAll(order.getLines());//Elimina las lineas asociadas a la orden
-            orderLineRepository.deleteAll(deletedLines);
+            orderLineRepo.deleteAll(deletedLines);
 
-            return orderRepository.save(order);
-        } catch (ValidateServiceException | NoDataFoundException e) {
-            log.info(e.getMessage(), e);
-            throw e;
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw new GeneralServiceException(e.getMessage(), e);
-        }
-    }
-
-    @Override
-    public ResponseEntity<?> deleteOrder(Long customerId, Long orderId) {
-        try {
-            return orderRepository.findByIdAndCustomerId(orderId, customerId).map(order -> {
-                orderRepository.delete(order);
-                return ResponseEntity.ok().build();
-            }).orElseThrow(() -> new NoDataFoundException("Order not found with Id " + orderId + " and CustomerId " + customerId));
-
+            return orderRepo.save(order);
         } catch (ValidateServiceException | NoDataFoundException e) {
             log.info(e.getMessage(), e);
             throw e;

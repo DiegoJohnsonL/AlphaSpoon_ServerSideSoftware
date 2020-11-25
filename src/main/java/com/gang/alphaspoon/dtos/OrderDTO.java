@@ -1,6 +1,5 @@
 package com.gang.alphaspoon.dtos;
 
-import com.gang.alphaspoon.dtos.resources.CustomerResource;
 import lombok.*;
 
 import java.util.List;
@@ -15,5 +14,5 @@ public class OrderDTO {
     private String regDate;
     private List<OrderLineDTO> lines;
     private Double total;
-    private CustomerResource customer;
+    private UserDTO user;
 }
