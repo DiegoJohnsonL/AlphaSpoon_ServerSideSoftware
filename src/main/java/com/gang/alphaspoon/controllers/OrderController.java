@@ -5,15 +5,14 @@ import com.gang.alphaspoon.dtos.OrderDTO;
 import com.gang.alphaspoon.entity.Order;
 import com.gang.alphaspoon.services.OrderService;
 import com.gang.alphaspoon.utils.WrapperResponse;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,33 +27,36 @@ public class OrderController {
     private OrderConverter converter;
 
     @GetMapping("/customers/{customerId}/orders")
-    public ResponseEntity<WrapperResponse<Page<OrderDTO>>> getAllOrdersByCustomerId(
-            @PathVariable(name = "customerId") Long customerId, Pageable pageable){
-        List<OrderDTO> resourceList = orderService.getAllOrdersByCustomerId(customerId, pageable).getContent()
-                .stream().map(converter::fromEntity).collect(Collectors.toList());
-        Page<OrderDTO> page = new PageImpl<>(resourceList, pageable, resourceList.size());
-        return new WrapperResponse<>(true, "success", page).createResponse();
+    public ResponseEntity<WrapperResponse<List<OrderDTO>>> getAllOrders(
+            @RequestParam(name = "pageNumber", required = false, defaultValue = "0") int pageNumber,
+            @RequestParam(name = "pageSize", required = false, defaultValue = "5") int pageSize)
+    {
+        Pageable page = PageRequest.of(pageNumber, pageSize);
+        List<Order> orders = orderService.findAll(page);
+        return new WrapperResponse<>(true, "success", converter.fromEntity(orders))
+                .createResponse();
     }
 
     @GetMapping("/customers/{customerId}/orders/{orderId}")
     public ResponseEntity<WrapperResponse<OrderDTO>> getOrderByIdAndCustomerId(@PathVariable(name = "customerId") Long customerId,
                                                     @PathVariable(name="orderId") Long orderId){
-        return new WrapperResponse<>(true, "success", converter.fromEntity(orderService.getOrderByIdAndCustomerId(orderId, customerId))).createResponse();
+        return new WrapperResponse<>(true, "success", converter.fromEntity(orderService.findById(orderId))).createResponse();
     }
 
     @PostMapping("/customers/{customerId}/orders")
     public ResponseEntity<WrapperResponse<OrderDTO>> createOrder(@PathVariable(name = "customerId") Long customerId, @RequestBody OrderDTO order) {
-        return new WrapperResponse<>(true, "success", converter.fromEntity(orderService.createOrder(customerId, converter.fromDTO(order)))).createResponse();
+        return new WrapperResponse<>(true, "success", converter.fromEntity(orderService.save(converter.fromDTO(order)))).createResponse();
     }
 
     @PutMapping("/customers/{customerId}/orders/{orderId}")
     public ResponseEntity<WrapperResponse<OrderDTO>> updateOrder(@PathVariable(name = "customerId") Long customerId, @RequestBody OrderDTO order){
-        return new WrapperResponse<>(true, "success", converter.fromEntity(orderService.createOrder(customerId, converter.fromDTO(order)))).createResponse();
+        return new WrapperResponse<>(true, "success", converter.fromEntity(orderService.save(converter.fromDTO(order)))).createResponse();
     }
 
     @DeleteMapping("/customers/{customerId}/orders/{orderId}")
     public ResponseEntity<?> deleteOrder(@PathVariable(name = "customerId") Long customerId, @PathVariable(name="orderId") Long orderId){
-        return new WrapperResponse<>(true, "success", orderService.deleteOrder(customerId, orderId)).createResponse();
+        orderService.delete(orderId);
+        return new WrapperResponse<>(true, "success", null).createResponse();
     }
 
 }

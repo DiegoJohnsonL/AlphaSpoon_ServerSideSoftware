@@ -1,6 +1,6 @@
 package com.gang.alphaspoon.config;
 
-import com.gang.alphaspoon.converters.CustomerConverter;
+import com.gang.alphaspoon.converters.UserConverter;
 import com.gang.alphaspoon.converters.OrderConverter;
 import com.gang.alphaspoon.converters.ProductConverter;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,13 +11,9 @@ import java.time.format.DateTimeFormatter;
 
 @Configuration
 public class ConverterConfig {
+
     @Value("${config.datetimeFormat}")
     private String datetimeFormat;
-
-    @Bean
-    public CustomerConverter getCustomerConverter(){
-        return new CustomerConverter();
-    }
 
     @Bean
     public ProductConverter getProductConverter() {
@@ -27,6 +23,12 @@ public class ConverterConfig {
     @Bean
     public OrderConverter getOrderConverter() {
         DateTimeFormatter format = DateTimeFormatter.ofPattern(datetimeFormat);
-        return new OrderConverter(format, getProductConverter());
+        return new OrderConverter(format, getProductConverter(),getUserConverter());
     }
+
+    @Bean
+    public UserConverter getUserConverter(){
+        return new UserConverter();
+    }
+
 }

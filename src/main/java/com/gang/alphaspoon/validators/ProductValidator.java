@@ -4,7 +4,7 @@ import com.gang.alphaspoon.entity.Product;
 import com.gang.alphaspoon.exceptions.ValidateServiceException;
 
 public class ProductValidator {
-    public static void validate(Product product) {
+    public static void save(Product product) {
 
         if(product.getName() == null || product.getName().trim().isEmpty()) {
             throw new ValidateServiceException("El nombre es requerido");

@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+
 @Slf4j
 @ControllerAdvice
-public class ErrorHandlerConfig extends ResponseEntityExceptionHandler {
+public class ErrorHandlerConfig extends ResponseEntityExceptionHandler{
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> all(Exception e, WebRequest request){
         log.error(e.getMessage(), e);

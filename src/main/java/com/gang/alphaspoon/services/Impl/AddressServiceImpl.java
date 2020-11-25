@@ -5,7 +5,7 @@ import com.gang.alphaspoon.exceptions.GeneralServiceException;
 import com.gang.alphaspoon.exceptions.NoDataFoundException;
 import com.gang.alphaspoon.exceptions.ValidateServiceException;
 import com.gang.alphaspoon.repository.AddressRepository;
-import com.gang.alphaspoon.repository.CustomerRepository;
+import com.gang.alphaspoon.repository.UserRepository;
 import com.gang.alphaspoon.services.AddressService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ public class AddressServiceImpl implements AddressService {
     @Autowired
     private AddressRepository addressRepository;
     @Autowired
-    private CustomerRepository customerRepository;
+    private UserRepository customerRepository;
 
     @Override
     public Page<Address> getAllAddress(Pageable pageable) {

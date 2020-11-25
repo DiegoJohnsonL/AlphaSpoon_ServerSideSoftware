@@ -5,10 +5,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 public interface OrderService {
-    Page<Order> getAllOrdersByCustomerId(Long customerId, Pageable pageable);
-    Order getOrderByIdAndCustomerId(Long orderId, Long customerId);
-    Order createOrder(Long customerId, Order order);
-    ResponseEntity<?> deleteOrder(Long customerId, Long orderId);
+    List<Order> findAll(Pageable pageable);
+    Order findById(Long orderId);
+    Order save(Order order);
+    void delete(Long orderId);
 
 }

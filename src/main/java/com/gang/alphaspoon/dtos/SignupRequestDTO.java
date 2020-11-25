@@ -1,5 +1,4 @@
-package com.gang.alphaspoon.dtos.requests;
-
+package com.gang.alphaspoon.dtos;
 
 import lombok.*;
 
@@ -8,7 +7,7 @@ import lombok.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
-    private String email;
+public class SignupRequestDTO {
+    private String username;
     private String password;
 }
